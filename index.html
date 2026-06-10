@@ -5,33 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="เว็บรวมผลงานและกิจกรรมของครูชั้นอนุบาล ดึงรูปจาก Google Drive แยกตามหมวด"
+      content="เว็บแฟ้มผลงานครูอนุบาลของ Thanita รวมกิจกรรม ผลงานเด็ก และรูปจาก Google Drive"
     />
-    <title>Kindy Class Portfolio</title>
+    <title>Thanita Works | Kindy Class Portfolio</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <style>
       :root {
-        --ink: #263044;
-        --muted: #6f7887;
-        --paper: #ffffff;
-        --cream: #fff7dd;
-        --yellow: #ffd76d;
-        --pink: #ff7d9c;
-        --rose: #ffe0e7;
-        --blue: #47c6d8;
-        --sky: #d9f9ff;
-        --mint: #8bddc7;
-        --green: #d8f6bc;
-        --orange: #ffb05c;
-        --line: rgba(38, 48, 68, 0.1);
-        --shadow: 0 20px 48px rgba(52, 66, 96, 0.14);
-        --radius: 24px;
+        --ink: #3d1723;
+        --text: #533845;
+        --muted: #8d7380;
+        --paper: #fffdf9;
+        --cream: #fff4eb;
+        --blush: #f8d9d3;
+        --rose: #dd7778;
+        --wine: #68142b;
+        --clay: #cfa18f;
+        --sage: #93a98c;
+        --line: rgba(104, 20, 43, 0.12);
+        --shadow: 0 22px 50px rgba(104, 20, 43, 0.12);
+        --soft-shadow: 0 12px 28px rgba(104, 20, 43, 0.1);
       }
 
       * {
@@ -45,13 +43,13 @@
       body {
         min-width: 320px;
         margin: 0;
-        background: #fffaf0;
-        color: var(--ink);
+        background: var(--paper);
+        color: var(--text);
         font-family: "Poppins", "Noto Sans Thai", system-ui, sans-serif;
         letter-spacing: 0;
       }
 
-      body.locked {
+      body.is-loading {
         overflow: hidden;
       }
 
@@ -76,22 +74,112 @@
         max-width: 100%;
       }
 
-      .site {
-        width: 100%;
-        min-height: 100vh;
-        overflow: hidden;
+      .page-loader {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        display: grid;
+        place-items: center;
+        padding: 24px;
         background:
           radial-gradient(
-            circle at 8% 9%,
-            rgba(255, 125, 156, 0.28) 0 90px,
-            transparent 92px
+            circle at 18% 20%,
+            rgba(221, 119, 120, 0.18),
+            transparent 28%
           ),
-          radial-gradient(
-            circle at 96% 31%,
-            rgba(71, 198, 216, 0.28) 0 120px,
-            transparent 122px
-          ),
-          linear-gradient(180deg, #fff7df 0%, #ffffff 34%, #fff6e5 100%);
+          linear-gradient(180deg, #fff4eb, #fffdf9);
+        color: var(--wine);
+        transition:
+          opacity 0.45s ease,
+          visibility 0.45s ease;
+      }
+
+      .loader-card {
+        width: min(100%, 360px);
+        text-align: center;
+      }
+
+      .loader-mark {
+        position: relative;
+        width: 38px;
+        height: 38px;
+        margin: 0 auto 18px;
+      }
+
+      .loader-mark::before,
+      .loader-mark::after {
+        content: "";
+        position: absolute;
+        left: 16px;
+        top: 2px;
+        width: 6px;
+        height: 34px;
+        border-radius: 99px;
+        background: var(--rose);
+      }
+
+      .loader-mark::after {
+        transform: rotate(90deg);
+      }
+
+      .loader-title {
+        margin: 0 0 16px;
+        color: var(--ink);
+        font-family: "Playfair Display", "Noto Sans Thai", serif;
+        font-size: 30px;
+        line-height: 1.1;
+      }
+
+      .loader-percent {
+        display: block;
+        margin-bottom: 12px;
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .loader-track {
+        height: 8px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: rgba(104, 20, 43, 0.12);
+      }
+
+      .loader-bar {
+        width: 1%;
+        height: 100%;
+        border-radius: inherit;
+        background: var(--rose);
+        transition: width 0.28s ease;
+      }
+
+      .loader-note {
+        margin: 14px 0 0;
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      body.is-ready .page-loader {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      .site {
+        min-height: 100vh;
+        overflow: hidden;
+        opacity: 0;
+        transition: opacity 0.45s ease;
+        background: linear-gradient(
+          180deg,
+          var(--cream) 0 27%,
+          var(--paper) 27% 55%,
+          #fff5ed 55% 100%
+        );
+      }
+
+      body.is-ready .site {
+        opacity: 1;
       }
 
       .topbar {
@@ -99,469 +187,626 @@
         top: 0;
         z-index: 20;
         display: grid;
-        grid-template-columns: auto 1fr;
+        grid-template-columns: auto 1fr auto;
         align-items: center;
-        gap: 20px;
-        min-height: 82px;
-        padding: 16px clamp(18px, 5vw, 72px);
-        background: rgba(255, 215, 109, 0.94);
-        border-bottom: 4px solid rgba(255, 255, 255, 0.58);
+        gap: 28px;
+        min-height: 76px;
+        padding: 16px clamp(20px, 7vw, 118px);
+        background: rgba(255, 244, 235, 0.9);
+        border-bottom: 1px solid rgba(104, 20, 43, 0.08);
         backdrop-filter: blur(14px);
       }
 
       .brand {
-        display: flex;
+        display: inline-flex;
         align-items: center;
-        gap: 12px;
+        gap: 9px;
         min-width: max-content;
+        color: var(--wine);
+        font-family: "Playfair Display", "Noto Sans Thai", serif;
+        font-size: 22px;
+        font-weight: 700;
       }
 
       .brand-mark {
-        display: grid;
-        place-items: center;
-        width: 48px;
-        height: 48px;
-        border-radius: 16px;
-        background: #fff;
-        box-shadow: inset 0 -5px 0 rgba(38, 48, 68, 0.08);
-        font-size: 24px;
+        position: relative;
+        width: 24px;
+        height: 24px;
       }
 
-      .brand strong {
-        display: block;
-        font-size: clamp(17px, 2vw, 24px);
-        font-weight: 800;
-        line-height: 1;
+      .brand-mark::before,
+      .brand-mark::after {
+        content: "";
+        position: absolute;
+        left: 10px;
+        top: 2px;
+        width: 4px;
+        height: 20px;
+        border-radius: 99px;
+        background: var(--rose);
       }
 
-      .brand span:last-child {
-        display: block;
-        margin-top: 4px;
-        color: rgba(38, 48, 68, 0.72);
-        font-size: 11px;
-        font-weight: 700;
+      .brand-mark::after {
+        transform: rotate(90deg);
       }
 
       .nav {
         display: flex;
         justify-content: center;
-        gap: 10px;
+        gap: 32px;
       }
 
-      .nav a,
-      .pill-button {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 42px;
-        padding: 0 18px;
-        border: 0;
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.78);
-        color: var(--ink);
+      .nav a {
+        color: #5d3948;
         font-size: 13px;
-        font-weight: 800;
-        line-height: 1.1;
-        text-align: center;
-        box-shadow: inset 0 -3px 0 rgba(38, 48, 68, 0.08);
+        font-weight: 600;
+      }
+
+      .nav a:hover {
+        color: var(--wine);
+      }
+
+      .search-dot {
+        width: 38px;
+        height: 38px;
+        border: 0;
+        border-radius: 50%;
+        background:
+          radial-gradient(
+            circle at 43% 42%,
+            transparent 0 7px,
+            var(--wine) 8px 10px,
+            transparent 11px
+          ),
+          linear-gradient(
+            45deg,
+            transparent 54%,
+            var(--wine) 55% 61%,
+            transparent 62%
+          );
       }
 
       .hero {
         position: relative;
-        min-height: calc(100vh - 82px);
         display: grid;
-        grid-template-columns: minmax(0, 1.02fr) minmax(320px, 0.98fr);
+        grid-template-columns: minmax(0, 1fr) minmax(320px, 0.9fr);
         align-items: center;
-        gap: 44px;
-        padding: clamp(34px, 5vw, 80px) clamp(18px, 6vw, 92px);
+        gap: clamp(34px, 6vw, 86px);
+        min-height: calc(100vh - 76px);
+        padding: clamp(42px, 6vw, 86px) clamp(20px, 7vw, 118px) 120px;
       }
 
-      .hero::before,
-      .hero::after {
+      .hero::after,
+      .welcome::before,
+      .expertise::after {
         content: "";
         position: absolute;
-        border-radius: 999px;
+        left: 50%;
+        bottom: -1px;
+        width: 140vw;
+        height: 120px;
+        transform: translateX(-50%);
+        border-radius: 0 0 50% 50% / 0 0 100% 100%;
+        background: var(--paper);
         pointer-events: none;
       }
 
-      .hero::before {
-        width: 42vw;
-        height: 42vw;
-        left: -18vw;
-        top: 50px;
-        background: #ffdf64;
-      }
-
-      .hero::after {
-        width: 24vw;
-        height: 24vw;
-        right: -10vw;
-        bottom: 30px;
-        background: #b8edf2;
-      }
-
       .hero-copy,
-      .hero-art {
+      .hero-visual {
         position: relative;
         z-index: 1;
       }
 
-      .label {
+      .eyebrow {
         display: inline-flex;
         align-items: center;
-        gap: 8px;
-        min-height: 38px;
-        padding: 0 16px;
-        border-radius: 999px;
-        background: #fff;
-        color: #da6c83;
+        gap: 10px;
+        color: var(--rose);
         font-size: 13px;
-        font-weight: 800;
-        box-shadow: var(--shadow);
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .eyebrow::before {
+        content: "";
+        width: 34px;
+        height: 1px;
+        background: currentColor;
+      }
+
+      h1,
+      h2,
+      h3 {
+        color: var(--ink);
+        font-family: "Playfair Display", "Noto Sans Thai", serif;
+        letter-spacing: 0;
       }
 
       .hero h1 {
-        max-width: 780px;
-        margin: 24px 0 18px;
-        font-size: clamp(45px, 7vw, 96px);
-        font-weight: 800;
-        line-height: 0.98;
+        max-width: 690px;
+        margin: 18px 0 18px;
+        font-size: clamp(44px, 6.3vw, 92px);
+        font-weight: 700;
+        line-height: 1.02;
       }
 
-      .hero p {
-        max-width: 640px;
-        margin: 0 0 28px;
-        color: #596376;
-        font-size: clamp(16px, 1.6vw, 21px);
-        font-weight: 600;
-        line-height: 1.7;
+      .lead {
+        max-width: 610px;
+        margin: 0;
+        color: var(--muted);
+        font-size: clamp(15px, 1.35vw, 18px);
+        font-weight: 500;
+        line-height: 1.9;
       }
 
       .hero-actions {
         display: flex;
         flex-wrap: wrap;
-        gap: 14px;
+        align-items: center;
+        gap: 16px;
+        margin-top: 30px;
+      }
+
+      .primary,
+      .play-link,
+      .folder-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
+        border: 0;
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 1.1;
       }
 
       .primary {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 54px;
-        padding: 0 25px;
-        border: 0;
-        border-radius: 999px;
-        background: var(--blue);
+        padding: 0 28px;
+        background: var(--rose);
         color: #fff;
-        font-size: 15px;
-        font-weight: 800;
-        line-height: 1.1;
-        text-align: center;
-        box-shadow: inset 0 -5px 0 rgba(38, 48, 68, 0.1);
+        box-shadow: var(--soft-shadow);
       }
 
-      .secondary {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 54px;
-        padding: 0 25px;
-        border: 0;
-        border-radius: 999px;
-        background: var(--pink);
-        color: #fff;
-        font-size: 15px;
-        font-weight: 800;
-        line-height: 1.1;
-        text-align: center;
-        box-shadow: inset 0 -5px 0 rgba(38, 48, 68, 0.1);
+      .play-link {
+        gap: 10px;
+        padding: 0 6px 0 0;
+        color: var(--wine);
       }
 
-      .hero-art {
-        min-height: 560px;
+      .play-link span {
         display: grid;
-        place-items: end center;
+        place-items: center;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: #fff;
+        color: var(--wine);
+        box-shadow: var(--soft-shadow);
       }
 
-      .play-card {
+      .hero-visual {
+        display: grid;
+        justify-items: center;
+      }
+
+      .portrait-frame {
         position: relative;
-        width: min(100%, 560px);
-        min-height: 470px;
-        border-radius: 42px;
-        background:
-          radial-gradient(circle at 26% 24%, #fff 0 10px, transparent 11px),
-          radial-gradient(circle at 74% 18%, #fff 0 16px, transparent 17px),
-          linear-gradient(145deg, #8de5ed, #fff1b1 58%, #ffd4df);
+        width: min(100%, 480px);
+        aspect-ratio: 0.86;
+      }
+
+      .portrait-frame img {
+        width: 100%;
+        height: 100%;
+        border-radius: 34% 34% 12% 34%;
+        object-fit: cover;
+        object-position: center;
         box-shadow: var(--shadow);
-        overflow: hidden;
       }
 
-      .child {
-        position: absolute;
-        bottom: 38px;
-        width: 164px;
-        height: 220px;
-        border-radius: 80px 80px 42px 42px;
-        background: #ffe0bd;
-        box-shadow: inset 0 -72px 0 #8fd8f0;
-      }
-
-      .child::before {
+      .portrait-frame::before {
         content: "";
         position: absolute;
-        top: 34px;
-        left: 38px;
-        width: 16px;
-        height: 16px;
+        inset: 9% -7% -8% 12%;
+        border-radius: 36% 22% 14% 36%;
+        border: 1px solid rgba(104, 20, 43, 0.12);
+        z-index: -1;
+      }
+
+      .tone-dots {
+        position: absolute;
+        right: -34px;
+        bottom: 21%;
+        display: grid;
+        gap: 15px;
+      }
+
+      .tone-dots span {
+        width: 22px;
+        height: 22px;
         border-radius: 50%;
-        background: #263044;
-        box-shadow: 72px 0 0 #263044;
+        background: var(--blush);
       }
 
-      .child::after {
-        content: "";
-        position: absolute;
-        top: 82px;
-        left: 57px;
-        width: 52px;
-        height: 25px;
-        border-bottom: 7px solid #f26e87;
-        border-radius: 0 0 70px 70px;
+      .tone-dots span:nth-child(2) {
+        background: var(--clay);
       }
 
-      .child.left {
-        left: 60px;
+      .tone-dots span:nth-child(3) {
+        background: var(--wine);
       }
 
-      .child.right {
-        right: 56px;
-        transform: scale(0.92);
-        box-shadow: inset 0 -72px 0 #ffd76d;
-      }
-
-      .hair {
-        position: absolute;
-        top: -8px;
-        left: 24px;
-        width: 116px;
-        height: 54px;
-        border-radius: 80px 80px 24px 24px;
-        background: #5b3c31;
-      }
-
-      .toy {
-        position: absolute;
-        border-radius: 18px;
-        box-shadow: inset 0 -5px 0 rgba(38, 48, 68, 0.1);
-      }
-
-      .toy.one {
-        left: 178px;
-        bottom: 48px;
-        width: 92px;
-        height: 62px;
-        background: var(--yellow);
-      }
-
-      .toy.two {
-        right: 175px;
-        bottom: 58px;
-        width: 70px;
-        height: 70px;
-        background: var(--pink);
-        border-radius: 50%;
-      }
-
-      .toy.three {
-        left: 43%;
-        bottom: 132px;
-        width: 58px;
-        height: 100px;
-        background: var(--blue);
-        transform: rotate(-9deg);
-      }
-
-      .heart {
-        position: absolute;
-        width: 44px;
-        height: 40px;
-        transform: rotate(-8deg);
-      }
-
-      .heart::before,
-      .heart::after {
-        content: "";
+      .spark {
         position: absolute;
         width: 24px;
-        height: 36px;
-        border-radius: 24px 24px 0 0;
-        background: var(--pink);
-        transform: rotate(-45deg);
-        transform-origin: 0 100%;
+        height: 24px;
       }
 
-      .heart::after {
-        left: 24px;
-        transform: rotate(45deg);
-        transform-origin: 100% 100%;
+      .spark::before,
+      .spark::after {
+        content: "";
+        position: absolute;
+        left: 10px;
+        top: 0;
+        width: 4px;
+        height: 24px;
+        border-radius: 99px;
+        background: var(--rose);
       }
 
-      .heart.h1 {
-        top: 72px;
-        left: 150px;
+      .spark::after {
+        transform: rotate(90deg);
       }
 
-      .heart.h2 {
-        top: 116px;
-        right: 110px;
-        transform: scale(0.72) rotate(12deg);
+      .spark.one {
+        left: 46%;
+        top: 11%;
+      }
+
+      .spark.two {
+        left: 51%;
+        top: 17%;
+        transform: scale(0.65) rotate(22deg);
       }
 
       .section {
-        padding: clamp(48px, 6vw, 86px) clamp(18px, 6vw, 92px);
+        position: relative;
+        padding: clamp(62px, 8vw, 112px) clamp(20px, 7vw, 118px);
       }
 
-      .section-head {
-        display: flex;
-        align-items: end;
-        justify-content: space-between;
-        gap: 28px;
-        margin-bottom: 28px;
+      .section-inner {
+        position: relative;
+        z-index: 1;
+        max-width: 1180px;
+        margin: 0 auto;
       }
 
-      .section-head h2 {
-        margin: 12px 0 0;
-        font-size: clamp(34px, 5vw, 66px);
-        font-weight: 800;
-        line-height: 1;
+      .welcome {
+        background: var(--paper);
       }
 
-      .section-head p {
-        max-width: 430px;
+      .welcome-grid,
+      .expertise-grid,
+      .drive-panel {
+        display: grid;
+        grid-template-columns: minmax(280px, 0.86fr) minmax(0, 1fr);
+        align-items: center;
+        gap: clamp(34px, 6vw, 86px);
+      }
+
+      .mini-portrait {
+        position: relative;
+      }
+
+      .mini-portrait img {
+        width: min(100%, 420px);
+        aspect-ratio: 0.9;
+        border-radius: 36% 12% 34% 12%;
+        object-fit: cover;
+        box-shadow: var(--shadow);
+      }
+
+      .mini-portrait::after {
+        content: "";
+        position: absolute;
+        left: 20%;
+        bottom: 10%;
+        width: 72%;
+        height: 16px;
+        background: rgba(104, 20, 43, 0.12);
+        transform: rotate(-3deg);
+      }
+
+      .section-title {
+        margin: 0 0 18px;
+        font-size: clamp(32px, 4.6vw, 58px);
+        line-height: 1.12;
+      }
+
+      .section-copy {
         margin: 0;
         color: var(--muted);
         font-size: 15px;
-        font-weight: 600;
-        line-height: 1.7;
+        font-weight: 500;
+        line-height: 1.9;
       }
 
       .stats {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 18px;
+        margin-top: 30px;
       }
 
       .stat {
-        min-height: 150px;
-        padding: 24px;
-        border-radius: var(--radius);
-        background: #fff;
-        box-shadow: var(--shadow);
+        min-height: 118px;
+        padding: 24px 18px;
+        border-radius: 8px;
+        background: #fff8f2;
+        text-align: center;
+        box-shadow: var(--soft-shadow);
+      }
+
+      .stat.featured {
+        background: var(--rose);
+        color: #fff;
       }
 
       .stat b {
         display: block;
-        margin-bottom: 8px;
-        font-size: clamp(32px, 4vw, 52px);
+        color: inherit;
+        font-family: "Playfair Display", "Noto Sans Thai", serif;
+        font-size: clamp(31px, 4vw, 48px);
         line-height: 1;
       }
 
       .stat span {
-        color: var(--muted);
-        font-size: 14px;
+        display: block;
+        margin-top: 8px;
+        font-size: 12px;
         font-weight: 700;
       }
 
-      .activity-grid {
+      .services {
+        background: #fff5ed;
+      }
+
+      .services::before {
+        content: "Activities";
+        position: absolute;
+        left: 50%;
+        top: 36px;
+        transform: translateX(-50%);
+        color: rgba(104, 20, 43, 0.035);
+        font-family: "Playfair Display", serif;
+        font-size: clamp(70px, 13vw, 170px);
+        line-height: 1;
+        pointer-events: none;
+      }
+
+      .center-head {
+        position: relative;
+        z-index: 1;
+        max-width: 760px;
+        margin: 0 auto 42px;
+        text-align: center;
+      }
+
+      .service-grid {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(4, minmax(0, 1fr));
         gap: 20px;
       }
 
-      .activity-card {
-        position: relative;
-        min-height: 250px;
-        padding: 24px;
-        border-radius: var(--radius);
-        overflow: hidden;
+      .service-card {
+        min-height: 236px;
+        padding: 28px 20px;
+        border-radius: 8px;
+        text-align: center;
+      }
+
+      .service-card.active {
+        background: var(--rose);
+        color: #fff;
         box-shadow: var(--shadow);
       }
 
-      .activity-card:nth-child(4n + 1) {
-        background: linear-gradient(145deg, #ffb1c4, #fff0a5);
-      }
-
-      .activity-card:nth-child(4n + 2) {
-        background: linear-gradient(145deg, #72d7e8, #dff8ff);
-      }
-
-      .activity-card:nth-child(4n + 3) {
-        background: linear-gradient(145deg, #ffe27b, #fff5ca);
-      }
-
-      .activity-card:nth-child(4n + 4) {
-        background: linear-gradient(145deg, #93ead1, #ffd0dd);
-      }
-
-      .activity-card h3 {
-        position: relative;
-        z-index: 1;
-        max-width: 220px;
-        margin: 0;
+      .service-card.active h3,
+      .service-card.active p {
         color: #fff;
-        font-size: 28px;
-        font-weight: 800;
-        line-height: 1.05;
-        text-shadow: 0 3px 14px rgba(38, 48, 68, 0.18);
       }
 
-      .activity-card p {
-        position: relative;
-        z-index: 1;
-        max-width: 230px;
-        margin: 12px 0 0;
-        color: rgba(38, 48, 68, 0.74);
-        font-size: 13px;
+      .service-icon {
+        display: grid;
+        place-items: center;
+        width: 52px;
+        height: 52px;
+        margin: 0 auto 18px;
+        border-radius: 50%;
+        border: 1px solid currentColor;
+        color: var(--wine);
+        font-size: 21px;
         font-weight: 700;
-        line-height: 1.55;
       }
 
-      .shape {
-        position: absolute;
-        right: 18px;
-        bottom: 18px;
-        width: 120px;
-        height: 120px;
-        border-radius: 32px;
-        background: rgba(255, 255, 255, 0.62);
-        transform: rotate(10deg);
+      .service-card h3 {
+        margin: 0 0 10px;
+        font-size: 22px;
       }
 
-      .shape::before,
-      .shape::after {
+      .service-card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.75;
+      }
+
+      .expertise {
+        background: var(--cream);
+        padding-bottom: 130px;
+      }
+
+      .expertise::after {
+        background: var(--paper);
+      }
+
+      .skill-list {
+        display: grid;
+        gap: 18px;
+        margin-top: 30px;
+      }
+
+      .skill span {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 9px;
+        color: var(--wine);
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .bar {
+        height: 13px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: #fff;
+      }
+
+      .bar i {
+        display: block;
+        height: 100%;
+        border-radius: inherit;
+        background: var(--rose);
+      }
+
+      .bar.sage i {
+        background: var(--sage);
+      }
+
+      .bar.wine i {
+        background: var(--wine);
+      }
+
+      .random-gallery {
+        background: #fff8f2;
+      }
+
+      .random-gallery .section-inner {
+        max-width: 1220px;
+      }
+
+      .random-head {
+        display: grid;
+        grid-template-columns: minmax(0, 0.88fr) auto;
+        align-items: end;
+        gap: 24px;
+        margin-bottom: 28px;
+      }
+
+      .random-head .section-title {
+        max-width: 720px;
+      }
+
+      .shuffle-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 46px;
+        padding: 0 20px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: #fff;
+        color: var(--wine);
+        font-size: 12px;
+        font-weight: 700;
+        box-shadow: var(--soft-shadow);
+      }
+
+      .image-mosaic {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      .mosaic-card {
+        position: relative;
+        min-height: 260px;
+        overflow: hidden;
+        border-radius: 8px;
+        background: var(--blush);
+        isolation: isolate;
+      }
+
+      .mosaic-card:nth-child(4n + 2),
+      .mosaic-card:nth-child(4n + 4) {
+        min-height: 320px;
+      }
+
+      .mosaic-card img {
+        width: 100%;
+        height: 100%;
+        min-height: inherit;
+        object-fit: cover;
+        transform: scale(1.02);
+      }
+
+      .mosaic-card::after {
         content: "";
         position: absolute;
-        border-radius: 50%;
+        inset: 0;
+        z-index: 1;
+        background:
+          linear-gradient(
+            180deg,
+            rgba(61, 23, 35, 0.08),
+            rgba(61, 23, 35, 0.5)
+          ),
+          linear-gradient(140deg, rgba(255, 248, 242, 0.18), transparent 48%);
       }
 
-      .shape::before {
-        width: 42px;
-        height: 42px;
-        left: 20px;
-        top: 22px;
-        background: var(--blue);
+      .mosaic-copy {
+        position: absolute;
+        left: 18px;
+        right: 18px;
+        bottom: 18px;
+        z-index: 2;
+        color: #fff;
       }
 
-      .shape::after {
-        width: 54px;
-        height: 54px;
-        right: 16px;
-        bottom: 16px;
-        background: var(--yellow);
+      .mosaic-copy strong {
+        display: block;
+        max-width: 260px;
+        font-family: "Playfair Display", "Noto Sans Thai", serif;
+        font-size: clamp(22px, 2.2vw, 32px);
+        line-height: 1.08;
+      }
+
+      .mosaic-copy span {
+        display: inline-flex;
+        margin-top: 10px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.18);
+        font-size: 11px;
+        font-weight: 700;
+        backdrop-filter: blur(8px);
       }
 
       .gallery {
-        background: linear-gradient(180deg, #ffffff 0%, #e7fbff 100%);
+        background: var(--paper);
+      }
+
+      .gallery .section-inner {
+        max-width: 1220px;
+      }
+
+      .section-head {
+        display: grid;
+        grid-template-columns: minmax(0, 0.9fr) minmax(280px, 0.62fr);
+        align-items: end;
+        gap: 28px;
+        margin-bottom: 28px;
       }
 
       .filter-row {
@@ -575,86 +820,68 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        min-height: 40px;
+        min-height: 38px;
         padding: 0 16px;
-        border: 0;
+        border: 1px solid var(--line);
         border-radius: 999px;
         background: #fff;
-        color: var(--ink);
-        font-size: 13px;
-        font-weight: 800;
-        line-height: 1.1;
-        text-align: center;
-        box-shadow: inset 0 -3px 0 rgba(38, 48, 68, 0.08);
+        color: var(--wine);
+        font-size: 12px;
+        font-weight: 700;
       }
 
       .chip.active {
-        background: var(--blue);
+        background: var(--wine);
         color: #fff;
       }
 
       .portfolio-grid {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 22px;
       }
 
       .portfolio-card {
         overflow: hidden;
-        border-radius: var(--radius);
+        border: 1px solid var(--line);
+        border-radius: 8px;
         background: #fff;
-        box-shadow: var(--shadow);
+        box-shadow: var(--soft-shadow);
       }
 
       .portfolio-image {
         position: relative;
-        min-height: 250px;
+        min-height: 245px;
         background:
-          radial-gradient(
-            circle at 22% 28%,
-            rgba(255, 255, 255, 0.75) 0 18px,
-            transparent 19px
+          linear-gradient(
+            140deg,
+            rgba(221, 119, 120, 0.2),
+            rgba(147, 169, 140, 0.16)
           ),
-          radial-gradient(
-            circle at 74% 33%,
-            rgba(255, 255, 255, 0.55) 0 26px,
-            transparent 27px
-          ),
-          linear-gradient(145deg, #ffd76d, #ff8aa6 45%, #45c5d9);
+          url("assets/J-01.png") center / cover;
       }
 
       .portfolio-image img {
         width: 100%;
         height: 100%;
-        min-height: 250px;
+        min-height: 245px;
         object-fit: cover;
       }
 
-      .portfolio-image::after {
-        content: attr(data-icon);
-        position: absolute;
-        right: 22px;
-        bottom: 18px;
-        font-size: 70px;
-        line-height: 1;
-      }
-
       .portfolio-body {
-        padding: 20px;
+        padding: 22px;
       }
 
       .portfolio-body h3 {
-        margin: 0 0 8px;
-        font-size: 22px;
-        font-weight: 800;
+        margin: 0 0 9px;
+        font-size: 24px;
       }
 
       .portfolio-body p {
-        margin: 0 0 14px;
+        margin: 0 0 16px;
         color: var(--muted);
-        font-size: 14px;
-        font-weight: 600;
-        line-height: 1.6;
+        font-size: 13px;
+        line-height: 1.75;
       }
 
       .meta {
@@ -666,44 +893,10 @@
       .meta span {
         padding: 7px 10px;
         border-radius: 999px;
-        background: var(--cream);
-        color: #8d6424;
+        background: #fff4eb;
+        color: var(--wine);
         font-size: 11px;
-        font-weight: 800;
-      }
-
-      .drive-panel {
-        display: grid;
-        grid-template-columns: 1fr auto;
-        gap: 24px;
-        align-items: center;
-        margin-top: 34px;
-        padding: 28px;
-        border-radius: var(--radius);
-        background:
-          radial-gradient(
-            circle at 92% 24%,
-            rgba(255, 255, 255, 0.44) 0 64px,
-            transparent 66px
-          ),
-          linear-gradient(135deg, #ffe385, #ff8fa7 58%, #69d3e1);
-        box-shadow: var(--shadow);
-      }
-
-      .drive-panel h3 {
-        margin: 0 0 8px;
-        color: #fff;
-        font-size: clamp(26px, 4vw, 44px);
-        font-weight: 800;
-      }
-
-      .drive-panel p {
-        max-width: 660px;
-        margin: 0;
-        color: rgba(38, 48, 68, 0.76);
-        font-size: 15px;
         font-weight: 700;
-        line-height: 1.7;
       }
 
       .folder-actions {
@@ -714,58 +907,91 @@
       }
 
       .folder-link {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
         min-height: 38px;
         padding: 0 14px;
-        border-radius: 999px;
-        background: var(--blue);
+        background: var(--rose);
         color: #fff;
-        font-size: 12px;
-        font-weight: 800;
-        line-height: 1.1;
-        text-align: center;
-        box-shadow: inset 0 -4px 0 rgba(38, 48, 68, 0.1);
       }
 
       .folder-link.secondary-link {
-        background: var(--pink);
+        background: var(--sage);
       }
 
       .empty-state {
         grid-column: 1 / -1;
         padding: 28px;
-        border-radius: var(--radius);
-        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff8f2;
         color: var(--muted);
         font-size: 15px;
-        font-weight: 700;
+        font-weight: 600;
+        line-height: 1.8;
+      }
+
+      .drive {
+        background: #fff7f0;
+      }
+
+      .drive-panel {
+        padding: clamp(28px, 5vw, 54px);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+        box-shadow: var(--soft-shadow);
+      }
+
+      .drive-list {
+        display: grid;
+        gap: 14px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .drive-list li {
+        display: grid;
+        grid-template-columns: 38px 1fr;
+        gap: 14px;
+        align-items: start;
+        color: var(--muted);
+        font-size: 14px;
         line-height: 1.7;
-        box-shadow: var(--shadow);
+      }
+
+      .drive-list b {
+        display: grid;
+        place-items: center;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: var(--cream);
+        color: var(--wine);
       }
 
       .footer {
         display: grid;
-        grid-template-columns: 1.1fr repeat(3, 1fr);
+        grid-template-columns: 1.2fr repeat(3, 1fr);
         gap: 24px;
-        padding: 42px clamp(18px, 6vw, 92px);
-        background: #8bdbe1;
+        padding: 42px clamp(20px, 7vw, 118px);
+        background: #3d1723;
+        color: rgba(255, 255, 255, 0.72);
       }
 
       .footer h3,
       .footer h4 {
         margin: 0 0 12px;
-        font-weight: 800;
+        color: #fff;
+        font-weight: 700;
       }
 
       .footer p,
       .footer a {
         display: block;
         margin: 0 0 8px;
-        color: rgba(38, 48, 68, 0.7);
+        color: rgba(255, 255, 255, 0.72);
         font-size: 13px;
-        font-weight: 700;
+        line-height: 1.7;
       }
 
       @media (max-width: 980px) {
@@ -776,238 +1002,404 @@
         .nav {
           grid-column: 1 / -1;
           justify-content: start;
+          gap: 18px;
           overflow-x: auto;
-          padding-bottom: 2px;
+          padding-bottom: 4px;
+        }
+
+        .search-dot {
+          grid-column: 2;
+          grid-row: 1;
         }
 
         .hero,
+        .welcome-grid,
+        .expertise-grid,
         .drive-panel,
+        .random-head,
+        .section-head,
         .footer {
           grid-template-columns: 1fr;
-        }
-
-        .hero-art {
-          min-height: 470px;
-        }
-
-        .stats,
-        .activity-grid,
-        .portfolio-grid {
-          grid-template-columns: repeat(2, 1fr);
-        }
-      }
-
-      @media (max-width: 680px) {
-        .site {
-          min-height: 100vh;
-        }
-
-        .topbar {
-          min-height: auto;
-          padding: 12px 14px;
-          gap: 12px;
-        }
-
-        .brand-mark {
-          width: 42px;
-          height: 42px;
-        }
-
-        .brand span:last-child {
-          display: none;
-        }
-
-        .nav a {
-          min-height: 36px;
-          padding: 0 13px;
-          font-size: 12px;
         }
 
         .hero {
           min-height: auto;
-          padding: 34px 14px 44px;
-          gap: 24px;
+          padding-bottom: 96px;
+        }
+
+        .service-grid,
+        .image-mosaic,
+        .portfolio-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 680px) {
+        .topbar {
+          min-height: auto;
+          padding: 12px 16px;
+          gap: 12px;
+        }
+
+        .brand {
+          font-size: 19px;
+        }
+
+        .nav a {
+          font-size: 12px;
+        }
+
+        .search-dot {
+          width: 34px;
+          height: 34px;
+        }
+
+        .hero {
+          padding: 38px 16px 80px;
         }
 
         .hero h1 {
-          font-size: 43px;
+          font-size: 42px;
         }
 
-        .hero p {
-          font-size: 15px;
-        }
-
-        .hero-actions,
-        .section-head {
+        .hero-actions {
           display: grid;
+          align-items: stretch;
         }
 
         .primary,
-        .secondary {
+        .play-link {
           width: 100%;
         }
 
-        .hero-art {
-          min-height: 370px;
+        .portrait-frame {
+          width: min(92vw, 420px);
         }
 
-        .play-card {
-          min-height: 360px;
-          border-radius: 30px;
-        }
-
-        .child {
-          width: 118px;
-          height: 168px;
-          bottom: 30px;
-        }
-
-        .child.left {
-          left: 26px;
-        }
-
-        .child.right {
-          right: 22px;
-        }
-
-        .child::before {
-          left: 28px;
-          width: 12px;
-          height: 12px;
-          box-shadow: 52px 0 0 #263044;
-        }
-
-        .child::after {
-          left: 39px;
-          top: 70px;
-          width: 42px;
-        }
-
-        .hair {
-          left: 18px;
-          width: 84px;
-        }
-
-        .toy.one {
-          left: 116px;
-        }
-
-        .toy.two {
-          right: 108px;
-        }
-
-        .toy.three {
-          display: none;
+        .tone-dots {
+          right: 8px;
         }
 
         .section {
-          padding: 42px 14px;
+          padding: 54px 16px;
+        }
+
+        .expertise {
+          padding-bottom: 92px;
         }
 
         .stats,
-        .activity-grid,
-        .portfolio-grid,
-        .footer {
+        .service-grid,
+        .portfolio-grid {
           grid-template-columns: 1fr;
         }
 
-        .activity-card {
-          min-height: 220px;
+        .image-mosaic {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
         }
 
-        .drive-panel {
-          padding: 22px;
+        .mosaic-card,
+        .mosaic-card:nth-child(4n + 2),
+        .mosaic-card:nth-child(4n + 4) {
+          min-height: 210px;
+        }
+
+        .mosaic-copy {
+          left: 12px;
+          right: 12px;
+          bottom: 12px;
+        }
+
+        .mosaic-copy strong {
+          font-size: 18px;
+        }
+
+        .service-card {
+          min-height: auto;
+          padding: 24px 18px;
+        }
+
+        .footer {
+          padding: 36px 16px;
+        }
+      }
+
+      @media (max-width: 360px) {
+        .image-mosaic {
+          grid-template-columns: 1fr;
         }
       }
     </style>
   </head>
-  <body>
+  <body class="is-loading">
+    <div class="page-loader" id="pageLoader" role="status" aria-live="polite">
+      <div class="loader-card">
+        <!-- <div class="loader-mark" aria-hidden="true"></div> -->
+        <!-- <h2 class="loader-title">กำลังเตรียมรูปภาพ</h2> -->
+        <span class="loader-percent" id="loaderPercent">1%</span>
+        <div class="loader-track" aria-hidden="true">
+          <div class="loader-bar" id="loaderBar"></div>
+        </div>
+        <p class="loader-note" id="loaderNote">กำลังโหลดข้อมูลแกลเลอรี...</p>
+      </div>
+    </div>
+    <noscript>
+      <style>
+        .page-loader {
+          display: none;
+        }
+
+        .site {
+          opacity: 1;
+        }
+      </style>
+    </noscript>
     <div class="site" id="site">
       <header class="topbar">
-        <a class="brand" href="#home" aria-label="หน้าแรก">
-          <span class="brand-mark">🌈</span>
-          <span>
-            <strong>Thanita Works</strong>
-            <span>แฟ้มผลงานครูอนุบาล</span>
-          </span>
-        </a>
-        <nav class="nav" aria-label="เมนูหลัก">
+        <!-- <a class="brand" href="#home" aria-label="หน้าแรก">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span>Thanita Works</span>
+        </a> -->
+        <!-- <nav class="nav" aria-label="เมนูหลัก">
+          <a href="#home">หน้าแรก</a>
           <a href="#works">ผลงาน</a>
           <a href="#activities">กิจกรรม</a>
           <a href="#gallery">แกลเลอรี</a>
         </nav>
+        <a class="search-dot" href="#gallery" aria-label="ค้นหาในแกลเลอรี"></a> -->
       </header>
 
       <main id="home">
         <section class="hero">
+          <span class="spark one" aria-hidden="true"></span>
+          <span class="spark two" aria-hidden="true"></span>
           <div class="hero-copy">
-            <span class="label">แฟ้มภาพกิจกรรมห้องอนุบาล</span>
-            <h1>รวมผลงานเด็กๆ และกิจกรรมของคุณครู</h1>
-            <p>
-              เก็บรูปงานศิลปะ กิจกรรมการเรียนรู้
-              และโมเมนต์น่ารักของห้องเรียนไว้ในที่เดียว โดยดึงจาก Google Drive
-              ที่คุณครูแยกโฟลเดอร์ไว้ตามหมวด
+            <span class="eyebrow">Kindergarten Portfolio</span>
+            <h1>แฟ้มผลงานเด็กๆ ที่อบอุ่นและดูสบายตา</h1>
+            <p class="lead">
+              รวมรูปงานศิลปะ กิจกรรมการเรียนรู้
+              และโมเมนต์น่ารักของห้องอนุบาลไว้ในหน้าเดียว โดยยังเชื่อมกับ Google
+              Drive ที่คุณครูแยกโฟลเดอร์ไว้ตามหมวดเหมือนเดิม
             </p>
             <div class="hero-actions">
               <a class="primary" href="#gallery">ดูผลงานล่าสุด</a>
+              <!-- <a class="play-link" href="#activities"
+                ><span aria-hidden="true">▶</span>ดูกิจกรรมของห้องเรียน</a
+              > -->
             </div>
           </div>
-          <div class="hero-art" aria-hidden="true">
-            <div class="play-card">
-              <span class="heart h1"></span>
-              <span class="heart h2"></span>
-              <div class="child left"><span class="hair"></span></div>
-              <div class="child right"><span class="hair"></span></div>
-              <span class="toy one"></span>
-              <span class="toy two"></span>
-              <span class="toy three"></span>
+          <div class="hero-visual" aria-label="ภาพประกอบครูอนุบาล">
+            <div class="portrait-frame">
+              <img
+                src="assets/J-01.png"
+                alt="ภาพประกอบครูอนุบาลและบรรยากาศห้องเรียนโทนอบอุ่น"
+                width="1024"
+                height="1024"
+              />
+              <div class="tone-dots" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
             </div>
           </div>
         </section>
 
-        <section class="section" id="works">
-          <div class="section-head">
+        <section class="section welcome" id="works">
+          <div class="section-inner welcome-grid">
+            <!-- <div class="mini-portrait" aria-hidden="true">
+              <img src="assets/J-01.png" alt="" width="1024" height="1024" />
+            </div> -->
             <div>
-              <span class="label">ภาพรวมผลงาน</span>
-              <h2>ห้องเรียนสดใส จัดเก็บเป็นระบบ</h2>
+              <span class="eyebrow">Welcome</span>
+              <h2 class="section-title">
+                บันทึกพัฒนาการของเด็กๆ อย่างเป็นระบบ
+              </h2>
+              <p class="section-copy">
+                หน้าเว็บนี้ใช้เนื้อหาเดิมจากแฟ้มผลงานครูอนุบาล
+                แต่ปรับรูปแบบให้นุ่มขึ้น อ่านง่ายขึ้น
+                และเพิ่มส่วนสรุปเพื่อให้ผู้ปกครองหรือโรงเรียนดูภาพรวมผลงาน
+                กิจกรรม และหมวดรูปได้สะดวกกว่าเดิม
+              </p>
+              <!-- <div class="stats" aria-label="สรุปแฟ้มผลงาน">
+                <div class="stat featured">
+                  <b id="statWorks">0</b>
+                  <span>รูปจาก Drive</span>
+                </div>
+                <div class="stat">
+                  <b>4</b>
+                  <span>หมวดกิจกรรม</span>
+                </div>
+                <div class="stat">
+                  <b>3</b>
+                  <span>ระดับชั้นอนุบาล</span>
+                </div>
+              </div> -->
             </div>
-            <p>
-              เหมาะสำหรับคุณครูที่อยากเก็บหลักฐานการเรียนรู้และแชร์ภาพกิจกรรมโดยไม่ต้องเข้า
-              Google Drive เองทุกครั้ง
-            </p>
-          </div>
-          <div class="stats">
-            <div class="stat">
-              <b id="statWorks">5</b><span>ผลงานในแฟ้ม</span>
-            </div>
-            <div class="stat"><b>5</b><span>หมวดกิจกรรม</span></div>
-            <div class="stat"><b>6</b><span>โฟลเดอร์ Drive</span></div>
-            <div class="stat"><b>ง่าย</b><span>อัปโหลดใน Drive</span></div>
           </div>
         </section>
+
+        <section class="section random-gallery" id="imageGrid">
+          <div class="section-inner">
+            <!-- <div class="random-head">
+              <div>
+                <span class="eyebrow">Random Gallery</span>
+                <h2 class="section-title">ภาพสุ่มจากแกลเลอรี</h2>
+                <p class="section-copy">
+                  ส่วนนี้จะสุ่มรูปจากประเภทเดียวกับแกลเลอรีด้านล่าง
+                  เมื่อเลือกหมวด รูปในกริดนี้จะเปลี่ยนตามหมวดนั้นด้วย
+                </p>
+              </div>
+              <button class="shuffle-button" id="shuffleGrid" type="button">
+                สุ่มรูปใหม่
+              </button>
+            </div> -->
+            <div class="image-mosaic" id="imageMosaic" aria-live="polite"></div>
+          </div>
+        </section>
+
+        <!-- <section class="section services" id="activities">
+          <div class="section-inner">
+            <div class="center-head">
+              <span class="eyebrow">Activities</span>
+              <h2 class="section-title">ช่วยจัดรูปกิจกรรมให้น่าติดตาม</h2>
+              <p class="section-copy">
+                เพิ่มพื้นที่เล่าเรื่องจากเนื้อหาเดิม เพื่อให้หน้าเว็บไม่ได้เป็นแค่แกลเลอรี
+                แต่เป็นแฟ้มผลงานที่บอกภาพรวมการเรียนรู้ของเด็กๆ ได้ครบขึ้น
+              </p>
+            </div>
+            <div class="service-grid">
+              <article class="service-card">
+                <span class="service-icon">01</span>
+                <h3>งานศิลปะ</h3>
+                <p>เก็บภาพชิ้นงาน วาด ระบายสี ปั้น ฉีกปะ และงานสร้างสรรค์ประจำสัปดาห์</p>
+              </article>
+              <article class="service-card active">
+                <span class="service-icon">02</span>
+                <h3>กิจกรรมเรียนรู้</h3>
+                <p>รวมภาพกิจกรรมเสริมประสบการณ์ เกมการเรียนรู้ และการทำงานร่วมกันในห้อง</p>
+              </article>
+              <article class="service-card">
+                <span class="service-icon">03</span>
+                <h3>พัฒนาการ</h3>
+                <p>ใช้รูปภาพช่วยเล่าความก้าวหน้าด้านกล้ามเนื้อ ภาษา สังคม และอารมณ์</p>
+              </article>
+              <article class="service-card">
+                <span class="service-icon">04</span>
+                <h3>กิจกรรมพิเศษ</h3>
+                <p>รองรับวันสำคัญ กิจกรรมนอกห้องเรียน และอัลบั้มพิเศษของโรงเรียน</p>
+              </article>
+            </div>
+          </div>
+        </section> -->
+
+        <!-- <section class="section expertise">
+          <div class="section-inner expertise-grid">
+            <div>
+              <span class="eyebrow">Class Focus</span>
+              <h2 class="section-title">จัดแฟ้มให้ดูครบทั้งผลงานและบรรยากาศ</h2>
+              <p class="section-copy">
+                โทนใหม่เน้นความสบายตา มีพื้นที่ว่างมากขึ้น
+                และแยกส่วนข้อมูลให้สแกนง่าย
+                เหมาะกับการส่งให้ผู้ปกครองหรือใช้เป็นแฟ้มสะสมงานของห้องเรียน
+              </p>
+              <div class="skill-list" aria-label="จุดเด่นของแฟ้มผลงาน">
+                <div class="skill">
+                  <span><em>ภาพผลงานเด็ก</em><em>90%</em></span>
+                  <div class="bar"><i style="width: 90%"></i></div>
+                </div>
+                <div class="skill">
+                  <span><em>กิจกรรมในชั้นเรียน</em><em>80%</em></span>
+                  <div class="bar sage"><i style="width: 80%"></i></div>
+                </div>
+                <div class="skill">
+                  <span><em>สรุปและเข้าถึง Drive</em><em>95%</em></span>
+                  <div class="bar wine"><i style="width: 95%"></i></div>
+                </div>
+              </div>
+            </div>
+            <div class="portrait-frame" aria-hidden="true">
+              <img
+                src="assets/J-01.png"
+                alt=""
+                width="1024"
+                height="1024"
+              />
+              <div class="tone-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+          </div>
+        </section> -->
 
         <section class="section gallery" id="gallery">
-          <div class="section-head">
-            <div>
-              <span class="label">แกลเลอรีผลงาน</span>
-              <h2>ผลงานล่าสุดของห้องเรียน</h2>
+          <div class="section-inner">
+            <div class="section-head">
+              <div>
+                <span class="eyebrow">Gallery</span>
+                <h2 class="section-title">ผลงานล่าสุดของห้องเรียน</h2>
+              </div>
+              <p class="section-copy">
+                รูปชุดนี้ดึงมาจาก Google Drive ที่แยกไว้ตามหมวด
+                คุณครูเพิ่มรูปใหม่ได้โดยอัปโหลดเข้าโฟลเดอร์ของหมวดนั้น
+              </p>
             </div>
-            <p>
-              รูปชุดนี้ดึงมาจาก Google Drive ที่แยกไว้ตามหมวด
-              คุณครูเพิ่มรูปใหม่ได้ง่ายๆ โดยเปิดโฟลเดอร์ Drive
-              แล้วอัปโหลดเข้าโฟลเดอร์ของหมวดนั้น
-            </p>
+            <div class="filter-row" id="filters"></div>
+            <div class="portfolio-grid" id="portfolioGrid"></div>
           </div>
-          <div class="filter-row" id="filters"></div>
-          <div class="portfolio-grid" id="portfolioGrid"></div>
         </section>
+
+        <!-- <section class="section drive" id="drive">
+          <div class="section-inner drive-panel">
+            <div>
+              <span class="eyebrow">Google Drive</span>
+              <h2 class="section-title">เพิ่มรูปได้จากโฟลเดอร์เดิม</h2>
+              <p class="section-copy">
+                ระบบยังใช้ Apps Script และ Google Drive เดิม
+                จึงไม่ต้องเปลี่ยนวิธีทำงานของคุณครู
+                เพียงอัปโหลดรูปเข้าโฟลเดอร์ที่จัดหมวดไว้
+                หน้าเว็บจะนำมาแสดงในแกลเลอรี
+              </p>
+              <div class="folder-actions">
+                <a
+                  class="folder-link"
+                  href="https://drive.google.com/drive/folders/1Jyw4cOPxmwi6X99dz-oC4nRiUryU36Ak?usp=sharing"
+                  target="_blank"
+                  rel="noopener"
+                  >เปิดโฟลเดอร์หลัก</a
+                >
+                <a class="folder-link secondary-link" href="#gallery"
+                  >ดูแกลเลอรี</a
+                >
+              </div>
+            </div>
+            <ul class="drive-list">
+              <li>
+                <b>1</b><span>เปิดโฟลเดอร์ Google Drive หลักของห้องเรียน</span>
+              </li>
+              <li>
+                <b>2</b
+                ><span>เลือกหมวดกิจกรรมหรือระดับชั้นที่ต้องการเพิ่มรูป</span>
+              </li>
+              <li>
+                <b>3</b
+                ><span
+                  >อัปโหลดรูป แล้วกลับมา refresh
+                  หน้าเว็บเพื่อดูรายการล่าสุด</span
+                >
+              </li>
+            </ul>
+          </div>
+        </section> -->
       </main>
 
       <footer class="footer">
         <div>
           <h3>Thanita Works</h3>
           <p>
-            แฟ้มภาพผลงานสำหรับครูชั้นอนุบาล ใช้ง่าย ดูน่ารัก
+            แฟ้มภาพผลงานสำหรับครูชั้นอนุบาล ใช้ง่าย ดูอบอุ่น
             และรองรับมือถือเต็มจอ
           </p>
         </div>
@@ -1025,7 +1417,7 @@
             rel="noopener"
             >เปิดโฟลเดอร์หลัก</a
           >
-          <a href="#drive">ดูปุ่มอัปโหลด</a>
+          <a href="#drive">วิธีเพิ่มรูป</a>
         </div>
         <div>
           <h4>สำหรับโรงเรียน</h4>
@@ -1038,43 +1430,209 @@
     <script>
       const API_URL =
         "https://script.google.com/macros/s/AKfycbxrCZsASp-7m6hkHX452KXPpbrsa1I4GOrvTmyNzN-wyezwkzZXAb0L8M84bkjeuos/exec";
-      const fallbackItems = [];
+      const MAIN_DRIVE_URL =
+        "https://drive.google.com/drive/folders/1Jyw4cOPxmwi6X99dz-oC4nRiUryU36Ak?usp=sharing";
+      const fallbackItems = [
+        {
+          id: "sample-art",
+          title: "แฟ้มงานศิลปะประจำสัปดาห์",
+          category: "งานศิลปะ",
+          date: "",
+          group: "อนุบาล",
+          desc: "ตัวอย่างหมวดสำหรับงานวาด ระบายสี และงานสร้างสรรค์ของเด็กๆ",
+          image: "",
+          folderUrl: MAIN_DRIVE_URL,
+        },
+        {
+          id: "sample-activity",
+          title: "กิจกรรมเรียนรู้ในห้อง",
+          category: "กิจกรรมเรียนรู้",
+          date: "",
+          group: "อนุบาล",
+          desc: "ตัวอย่างหมวดสำหรับภาพกิจกรรม การเล่น และการทำงานร่วมกัน",
+          image: "",
+          folderUrl: MAIN_DRIVE_URL,
+        },
+        {
+          id: "sample-special",
+          title: "กิจกรรมพิเศษของโรงเรียน",
+          category: "กิจกรรมพิเศษ",
+          date: "",
+          group: "อนุบาล",
+          desc: "ตัวอย่างหมวดสำหรับวันสำคัญและอัลบั้มพิเศษ",
+          image: "",
+          folderUrl: MAIN_DRIVE_URL,
+        },
+      ];
 
       const portfolioGrid = document.querySelector("#portfolioGrid");
       const filters = document.querySelector("#filters");
       const statWorks = document.querySelector("#statWorks");
+      const imageMosaic = document.querySelector("#imageMosaic");
+      const shuffleGrid = document.querySelector("#shuffleGrid");
+      const loaderPercent = document.querySelector("#loaderPercent");
+      const loaderBar = document.querySelector("#loaderBar");
+      const loaderNote = document.querySelector("#loaderNote");
       let currentFilter = "ทั้งหมด";
       let items = [];
+      let loadingProgress = 1;
+      let loaderDone = false;
+      const progressTimer = window.setInterval(() => {
+        if (loaderDone) return;
+        const nextProgress =
+          loadingProgress < 72
+            ? loadingProgress + 1
+            : loadingProgress < 94
+              ? loadingProgress + 0.35
+              : loadingProgress + 0.08;
+        setLoadingProgress(Math.min(99, nextProgress));
+      }, 120);
+
+      function setLoadingProgress(value, note) {
+        loadingProgress = Math.max(1, Math.min(100, Math.round(value)));
+        if (loaderPercent) loaderPercent.textContent = `${loadingProgress}%`;
+        if (loaderBar) loaderBar.style.width = `${loadingProgress}%`;
+        if (note && loaderNote) loaderNote.textContent = note;
+      }
+
+      function preloadImage(src) {
+        return new Promise((resolve) => {
+          if (!src) {
+            resolve(false);
+            return;
+          }
+
+          const image = new Image();
+          const timeout = window.setTimeout(() => resolve(false), 12000);
+          const finish = (status) => {
+            window.clearTimeout(timeout);
+            resolve(status);
+          };
+          image.decoding = "async";
+          image.onload = () => finish(true);
+          image.onerror = () => finish(false);
+          image.src = src;
+        });
+      }
+
+      async function preloadPageImages(nextItems) {
+        const imageSources = [
+          "assets/J-01.png",
+          ...nextItems.map((item) => item.image).filter(Boolean),
+        ];
+        const uniqueSources = [...new Set(imageSources)];
+
+        if (!uniqueSources.length) {
+          setLoadingProgress(99, "กำลังจัดหน้าเว็บ...");
+          return;
+        }
+
+        let loaded = 0;
+        await Promise.all(
+          uniqueSources.map(async (src) => {
+            await preloadImage(src);
+            loaded += 1;
+            const imageProgress = 35 + (loaded / uniqueSources.length) * 60;
+            setLoadingProgress(
+              imageProgress,
+              `กำลังโหลดรูปภาพ ${loaded}/${uniqueSources.length}`,
+            );
+          }),
+        );
+      }
+
+      function revealSite() {
+        loaderDone = true;
+        window.clearInterval(progressTimer);
+        setLoadingProgress(100, "พร้อมแสดงหน้าเว็บ");
+        window.setTimeout(() => {
+          document.body.classList.remove("is-loading");
+          document.body.classList.add("is-ready");
+        }, 260);
+      }
+
+      async function setItemsAndReveal(nextItems) {
+        items = nextItems.length ? nextItems : fallbackItems;
+        await preloadPageImages(items);
+        renderPortfolio();
+        revealSite();
+      }
+
+      function escapeHtml(value) {
+        return String(value || "")
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
 
       function formatDate(value) {
         if (!value) return "ยังไม่ระบุวันที่";
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return "ยังไม่ระบุวันที่";
         return new Intl.DateTimeFormat("th-TH", {
           day: "numeric",
           month: "short",
           year: "numeric",
-        }).format(new Date(value));
+        }).format(date);
       }
 
-      function renderFilters(items) {
+      function renderFilters(nextItems) {
         const cats = [
           "ทั้งหมด",
-          ...new Set(items.map((item) => item.category)),
+          ...new Set(nextItems.map((item) => item.category).filter(Boolean)),
         ];
         filters.innerHTML = cats
           .map(
             (cat) =>
-              `<button class="chip ${cat === currentFilter ? "active" : ""}" type="button" data-filter="${cat}">${cat}</button>`,
+              `<button class="chip ${cat === currentFilter ? "active" : ""}" type="button" data-filter="${escapeHtml(cat)}">${escapeHtml(cat)}</button>`,
           )
           .join("");
       }
 
+      function getVisibleItems() {
+        return currentFilter === "ทั้งหมด"
+          ? items
+          : items.filter((item) => item.category === currentFilter);
+      }
+
+      function shuffleItems(nextItems) {
+        return [...nextItems].sort(() => Math.random() - 0.5);
+      }
+
+      function renderImageMosaic(sourceItems = getVisibleItems()) {
+        if (!imageMosaic) return;
+        const galleryItems = sourceItems.length ? sourceItems : fallbackItems;
+        const randomItems = [];
+        while (randomItems.length < 9 && galleryItems.length) {
+          randomItems.push(...shuffleItems(galleryItems));
+        }
+
+        imageMosaic.innerHTML = randomItems
+          .slice(0, 9)
+          .map((item) => {
+            const title = escapeHtml(item.title || "ผลงานของเด็กๆ");
+            const category = escapeHtml(item.category || "แกลเลอรี");
+            const image = escapeHtml(item.image || "assets/J-01.png");
+            return `
+              <article class="mosaic-card">
+                <img src="${image}" alt="${title}" loading="lazy" decoding="async">
+                <div class="mosaic-copy">
+                  <strong>${title}</strong>
+                  <span>${category}</span>
+                </div>
+              </article>
+            `;
+          })
+          .join("");
+      }
+
       function renderPortfolio() {
-        const visible =
-          currentFilter === "ทั้งหมด"
-            ? items
-            : items.filter((item) => item.category === currentFilter);
-        statWorks.textContent = items.length;
+        const visible = getVisibleItems();
+        if (statWorks) statWorks.textContent = items.length;
         renderFilters(items);
+        renderImageMosaic(visible);
         if (!visible.length) {
           portfolioGrid.innerHTML = `
             <div class="empty-state">
@@ -1084,28 +1642,36 @@
           return;
         }
         portfolioGrid.innerHTML = visible
-          .map(
-            (item) => `
-          <article class="portfolio-card">
-            <div class="portfolio-image" data-icon="${item.icon || ""}">
-              ${item.image ? `<img src="${item.image}" alt="${item.title}" loading="lazy" decoding="async">` : ""}
-            </div>
-            <div class="portfolio-body">
-              <h3>${item.title}</h3>
-              <p>${item.desc || "บันทึกผลงานและกิจกรรมของเด็กๆ"}</p>
-              <div class="meta">
-                <span>${item.category}</span>
-                <span>${formatDate(item.date)}</span>
-                <span>${item.group || "อนุบาล"}</span>
-              </div>
-              <div class="folder-actions">
-                <a class="folder-link" href="${item.folderUrl}" target="_blank" rel="noopener">เปิดโฟลเดอร์</a>
-                <a class="folder-link secondary-link" href="${item.folderUrl}" target="_blank" rel="noopener">อัปโหลดรูป</a>
-              </div>
-            </div>
-          </article>
-        `,
-          )
+          .map((item) => {
+            const title = escapeHtml(item.title);
+            const desc = escapeHtml(
+              item.desc || "บันทึกผลงานและกิจกรรมของเด็กๆ",
+            );
+            const category = escapeHtml(item.category || "กิจกรรมพิเศษ");
+            const group = escapeHtml(item.group || "อนุบาล");
+            const image = item.image
+              ? `<img src="${escapeHtml(item.image)}" alt="${title}" loading="lazy" decoding="async">`
+              : "";
+            const folderUrl = escapeHtml(item.folderUrl || MAIN_DRIVE_URL);
+            return `
+              <article class="portfolio-card">
+                <div class="portfolio-image">${image}</div>
+                <div class="portfolio-body">
+                  <h3>${title}</h3>
+                  <p>${desc}</p>
+                  <div class="meta">
+                    <span>${category}</span>
+                    <span>${escapeHtml(formatDate(item.date))}</span>
+                    <span>${group}</span>
+                  </div>
+                  <div class="folder-actions">
+                    <a class="folder-link" href="${folderUrl}" target="_blank" rel="noopener">เปิดโฟลเดอร์</a>
+                    <a class="folder-link secondary-link" href="${folderUrl}" target="_blank" rel="noopener">อัปโหลดรูป</a>
+                  </div>
+                </div>
+              </article>
+            `;
+          })
           .join("");
       }
 
@@ -1114,6 +1680,10 @@
         if (!button) return;
         currentFilter = button.dataset.filter;
         renderPortfolio();
+      });
+
+      shuffleGrid?.addEventListener("click", () => {
+        renderImageMosaic();
       });
 
       function normalizeItems(nextItems) {
@@ -1126,13 +1696,14 @@
           desc:
             item.desc ||
             `รูปจาก Google Drive หมวด ${item.category || "กิจกรรม"}`,
-          image: item.image,
-          folderUrl: item.folderUrl,
+          image: item.image || "",
+          folderUrl: item.folderUrl || MAIN_DRIVE_URL,
           fileName: item.fileName || "",
         }));
       }
 
       function loadItemsByJsonp() {
+        setLoadingProgress(8, "กำลังโหลดข้อมูลแกลเลอรี...");
         portfolioGrid.innerHTML = `
           <div class="empty-state">กำลังโหลดรูปจาก Google Drive...</div>
         `;
@@ -1141,7 +1712,7 @@
         const script = document.createElement("script");
         const timeout = window.setTimeout(() => {
           cleanup();
-          useFallback("Apps Script ไม่ตอบกลับในเวลาที่กำหนด");
+          useFallback();
         }, 8000);
 
         function cleanup() {
@@ -1150,23 +1721,24 @@
           script.remove();
         }
 
-        function useFallback(reason) {
-          items = fallbackItems;
-          renderPortfolio();
+        async function useFallback() {
+          await setItemsAndReveal(fallbackItems);
         }
 
-        window[callbackName] = (payload) => {
+        window[callbackName] = async (payload) => {
           cleanup();
           const nextItems = Array.isArray(payload)
             ? payload
             : payload.items || [];
-          items = nextItems.length ? normalizeItems(nextItems) : fallbackItems;
-          renderPortfolio();
+          const normalizedItems = nextItems.length
+            ? normalizeItems(nextItems)
+            : fallbackItems;
+          await setItemsAndReveal(normalizedItems);
         };
 
-        script.onerror = () => {
+        script.onerror = async () => {
           cleanup();
-          useFallback("โหลด script ไม่สำเร็จ");
+          await useFallback();
         };
 
         script.src = `${API_URL}?callback=${callbackName}&t=${Date.now()}`;
