@@ -8,7 +8,7 @@
       content="เว็บแฟ้มผลงานครูอนุบาลของ Thanita รวมกิจกรรม ผลงานเด็ก และรูปจาก Google Drive"
     />
     <title>Thanita Works | Kindy Class Portfolio</title>
-    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="TN1.png" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -53,6 +53,10 @@
         overflow: hidden;
       }
 
+      body.contact-open {
+        overflow: hidden;
+      }
+
       button,
       input,
       textarea,
@@ -72,6 +76,48 @@
       img {
         display: block;
         max-width: 100%;
+      }
+
+      .parallax-bg {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        overflow: hidden;
+        pointer-events: none;
+        background: linear-gradient(
+          180deg,
+          #fff4eb 0%,
+          #fffdf9 54%,
+          #fff5ed 100%
+        );
+      }
+
+      .parallax-layer {
+        position: absolute;
+        inset: -12%;
+        will-change: transform;
+      }
+
+      .parallax-layer.one {
+        opacity: 0.34;
+        background:
+          repeating-linear-gradient(
+            115deg,
+            transparent 0 44px,
+            rgba(104, 20, 43, 0.055) 45px 46px,
+            transparent 47px 92px
+          ),
+          linear-gradient(145deg, rgba(221, 119, 120, 0.14), transparent 46%);
+      }
+
+      .parallax-layer.two {
+        opacity: 0.22;
+        background: repeating-linear-gradient(
+          25deg,
+          transparent 0 70px,
+          rgba(147, 169, 140, 0.12) 71px 72px,
+          transparent 73px 140px
+        );
       }
 
       .page-loader {
@@ -166,6 +212,8 @@
       }
 
       .site {
+        position: relative;
+        z-index: 1;
         min-height: 100vh;
         overflow: hidden;
         opacity: 0;
@@ -203,7 +251,8 @@
         gap: 9px;
         min-width: max-content;
         color: var(--wine);
-        font-family: "Playfair Display", "Noto Sans Thai", serif;
+        font-family: "Poppins", "Noto Sans Thai", system-ui, sans-serif;
+
         font-size: 22px;
         font-weight: 700;
       }
@@ -264,6 +313,144 @@
             var(--wine) 55% 61%,
             transparent 62%
           );
+      }
+
+      .contact-chip {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        justify-self: end;
+        gap: 9px;
+        width: max-content;
+        min-height: 42px;
+        padding: 0 16px;
+        border: 1px solid rgba(104, 20, 43, 0.14);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.72);
+        color: var(--wine);
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 1;
+        box-shadow: var(--soft-shadow);
+        backdrop-filter: blur(12px);
+      }
+
+      .contact-chip-icon {
+        display: grid;
+        place-items: center;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: var(--wine);
+        color: #fff;
+        font-size: 13px;
+      }
+
+      .contact-dialog {
+        width: min(calc(100vw - 32px), 420px);
+        padding: 0;
+        border: 0;
+        border-radius: 14px;
+        background: #fffdf9;
+        color: var(--text);
+        box-shadow: 0 28px 80px rgba(61, 23, 35, 0.24);
+      }
+
+      .contact-dialog::backdrop {
+        background: rgba(61, 23, 35, 0.34);
+        backdrop-filter: blur(4px);
+      }
+
+      .contact-panel {
+        padding: 24px;
+      }
+
+      .contact-panel header {
+        display: flex;
+        align-items: start;
+        justify-content: space-between;
+        gap: 18px;
+        margin-bottom: 18px;
+      }
+
+      .contact-panel h2 {
+        margin: 0 0 6px;
+        font-size: 30px;
+        line-height: 1.08;
+      }
+
+      .contact-panel p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 1.6;
+      }
+
+      .dialog-close {
+        flex: 0 0 auto;
+        display: grid;
+        place-items: center;
+        width: 36px;
+        height: 36px;
+        border: 1px solid var(--line);
+        border-radius: 50%;
+        background: #fff;
+        color: var(--wine);
+        font-size: 20px;
+        line-height: 1;
+      }
+
+      .contact-list {
+        display: grid;
+        gap: 10px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .contact-item {
+        display: grid;
+        grid-template-columns: 42px 1fr;
+        gap: 12px;
+        align-items: center;
+        min-height: 64px;
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: #fff8f2;
+      }
+
+      .contact-item b {
+        display: grid;
+        place-items: center;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: var(--rose);
+        color: #fff;
+        font-size: 13px;
+      }
+
+      .contact-item span {
+        display: block;
+        color: var(--wine);
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .contact-item a,
+      .contact-item small {
+        display: block;
+        margin-top: 3px;
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 600;
+        word-break: break-word;
+      }
+
+      .contact-item a:hover {
+        color: var(--wine);
       }
 
       .hero {
@@ -403,6 +590,7 @@
         object-fit: cover;
         object-position: center;
         box-shadow: var(--shadow);
+        will-change: transform;
       }
 
       .portrait-frame::before {
@@ -473,6 +661,25 @@
       .section {
         position: relative;
         padding: clamp(62px, 8vw, 112px) clamp(20px, 7vw, 118px);
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translate3d(0, 24px, 0);
+        transition:
+          opacity 0.7s ease,
+          transform 0.7s ease;
+        will-change: opacity, transform;
+      }
+
+      .reveal.is-visible {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+      }
+
+      .reveal.is-faded {
+        opacity: 0.18;
+        transform: translate3d(0, -10px, 0);
       }
 
       .section-inner {
@@ -726,14 +933,14 @@
       .image-mosaic {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 8px;
+        gap: 0px;
       }
 
       .mosaic-card {
         position: relative;
         min-height: 260px;
         overflow: hidden;
-        border-radius: 8px;
+        border-radius: 0px;
         background: var(--blush);
         isolation: isolate;
       }
@@ -847,6 +1054,14 @@
         border-radius: 8px;
         background: #fff;
         box-shadow: var(--soft-shadow);
+        transition:
+          transform 0.24s ease,
+          box-shadow 0.24s ease;
+      }
+
+      .portfolio-card:hover,
+      .mosaic-card:hover {
+        transform: translateY(-4px);
       }
 
       .portfolio-image {
@@ -1045,6 +1260,27 @@
           font-size: 19px;
         }
 
+        .contact-chip {
+          min-height: 38px;
+          width: 38px;
+          padding: 0 12px;
+          font-size: 12px;
+        }
+
+        .contact-chip-icon {
+          width: 22px;
+          height: 22px;
+        }
+
+        .contact-chip-label {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          overflow: hidden;
+          clip: rect(0 0 0 0);
+          white-space: nowrap;
+        }
+
         .nav a {
           font-size: 12px;
         }
@@ -1129,6 +1365,33 @@
           grid-template-columns: 1fr;
         }
       }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+
+        .parallax-layer,
+        .portrait-frame img,
+        .reveal,
+        .reveal.is-faded {
+          transform: none !important;
+        }
+
+        .reveal,
+        .reveal.is-visible,
+        .reveal.is-faded {
+          opacity: 1 !important;
+        }
+      }
     </style>
   </head>
   <body class="is-loading">
@@ -1154,12 +1417,16 @@
         }
       </style>
     </noscript>
+    <div class="parallax-bg" aria-hidden="true">
+      <div class="parallax-layer one" data-parallax-speed="0.08"></div>
+      <div class="parallax-layer two" data-parallax-speed="-0.045"></div>
+    </div>
     <div class="site" id="site">
       <header class="topbar">
-        <!-- <a class="brand" href="#home" aria-label="หน้าแรก">
+        <a class="brand" href="#home" aria-label="หน้าแรก">
           <span class="brand-mark" aria-hidden="true"></span>
-          <span>Thanita Works</span>
-        </a> -->
+          <span>Kru. Thanita Sakpishet</span>
+        </a>
         <!-- <nav class="nav" aria-label="เมนูหลัก">
           <a href="#home">หน้าแรก</a>
           <a href="#works">ผลงาน</a>
@@ -1167,22 +1434,25 @@
           <a href="#gallery">แกลเลอรี</a>
         </nav>
         <a class="search-dot" href="#gallery" aria-label="ค้นหาในแกลเลอรี"></a> -->
+        <button class="contact-chip" id="contactButton" type="button">
+          <span class="contact-chip-icon" aria-hidden="true">☎</span>
+          <span class="contact-chip-label">Contact</span>
+        </button>
       </header>
 
       <main id="home">
-        <section class="hero">
-          <span class="spark one" aria-hidden="true"></span>
-          <span class="spark two" aria-hidden="true"></span>
+        <section class="hero reveal">
+          <!-- <span class="spark one" aria-hidden="true"></span>
+          <span class="spark two" aria-hidden="true"></span> -->
           <div class="hero-copy">
-            <span class="eyebrow">Kindergarten Portfolio</span>
+            <span class="eyebrow">Portfolio</span>
             <h1>แฟ้มผลงานเด็กๆ ที่อบอุ่นและดูสบายตา</h1>
             <p class="lead">
               รวมรูปงานศิลปะ กิจกรรมการเรียนรู้
-              และโมเมนต์น่ารักของห้องอนุบาลไว้ในหน้าเดียว โดยยังเชื่อมกับ Google
-              Drive ที่คุณครูแยกโฟลเดอร์ไว้ตามหมวดเหมือนเดิม
+              และโมเมนต์น่ารักของห้องอนุบาลไว้ในหน้าเดียว
             </p>
             <div class="hero-actions">
-              <a class="primary" href="#gallery">ดูผลงานล่าสุด</a>
+              <!-- <a class="primary" href="#gallery">ดูผลงานล่าสุด</a> -->
               <!-- <a class="play-link" href="#activities"
                 ><span aria-hidden="true">▶</span>ดูกิจกรรมของห้องเรียน</a
               > -->
@@ -1205,7 +1475,7 @@
           </div>
         </section>
 
-        <section class="section welcome" id="works">
+        <section class="section welcome reveal" id="works">
           <div class="section-inner welcome-grid">
             <!-- <div class="mini-portrait" aria-hidden="true">
               <img src="assets/J-01.png" alt="" width="1024" height="1024" />
@@ -1216,10 +1486,9 @@
                 บันทึกพัฒนาการของเด็กๆ อย่างเป็นระบบ
               </h2>
               <p class="section-copy">
-                หน้าเว็บนี้ใช้เนื้อหาเดิมจากแฟ้มผลงานครูอนุบาล
-                แต่ปรับรูปแบบให้นุ่มขึ้น อ่านง่ายขึ้น
-                และเพิ่มส่วนสรุปเพื่อให้ผู้ปกครองหรือโรงเรียนดูภาพรวมผลงาน
-                กิจกรรม และหมวดรูปได้สะดวกกว่าเดิม
+                เด็กๆ ในห้องเรียนมีพัฒนาการและผลงานที่น่าประทับใจมากมาย
+                การมีแฟ้มผลงานที่จัดระเบียบดีจะช่วยให้ครูและผู้ปกครองเห็นภาพรวมการเรียนรู้ของเด็กๆ
+                ได้ชัดเจน
               </p>
               <!-- <div class="stats" aria-label="สรุปแฟ้มผลงาน">
                 <div class="stat featured">
@@ -1239,102 +1508,13 @@
           </div>
         </section>
 
-        <section class="section random-gallery" id="imageGrid">
+        <section class="reveal" id="imageGrid">
           <div class="section-inner">
-            <!-- <div class="random-head">
-              <div>
-                <span class="eyebrow">Random Gallery</span>
-                <h2 class="section-title">ภาพสุ่มจากแกลเลอรี</h2>
-                <p class="section-copy">
-                  ส่วนนี้จะสุ่มรูปจากประเภทเดียวกับแกลเลอรีด้านล่าง
-                  เมื่อเลือกหมวด รูปในกริดนี้จะเปลี่ยนตามหมวดนั้นด้วย
-                </p>
-              </div>
-              <button class="shuffle-button" id="shuffleGrid" type="button">
-                สุ่มรูปใหม่
-              </button>
-            </div> -->
             <div class="image-mosaic" id="imageMosaic" aria-live="polite"></div>
           </div>
         </section>
 
-        <!-- <section class="section services" id="activities">
-          <div class="section-inner">
-            <div class="center-head">
-              <span class="eyebrow">Activities</span>
-              <h2 class="section-title">ช่วยจัดรูปกิจกรรมให้น่าติดตาม</h2>
-              <p class="section-copy">
-                เพิ่มพื้นที่เล่าเรื่องจากเนื้อหาเดิม เพื่อให้หน้าเว็บไม่ได้เป็นแค่แกลเลอรี
-                แต่เป็นแฟ้มผลงานที่บอกภาพรวมการเรียนรู้ของเด็กๆ ได้ครบขึ้น
-              </p>
-            </div>
-            <div class="service-grid">
-              <article class="service-card">
-                <span class="service-icon">01</span>
-                <h3>งานศิลปะ</h3>
-                <p>เก็บภาพชิ้นงาน วาด ระบายสี ปั้น ฉีกปะ และงานสร้างสรรค์ประจำสัปดาห์</p>
-              </article>
-              <article class="service-card active">
-                <span class="service-icon">02</span>
-                <h3>กิจกรรมเรียนรู้</h3>
-                <p>รวมภาพกิจกรรมเสริมประสบการณ์ เกมการเรียนรู้ และการทำงานร่วมกันในห้อง</p>
-              </article>
-              <article class="service-card">
-                <span class="service-icon">03</span>
-                <h3>พัฒนาการ</h3>
-                <p>ใช้รูปภาพช่วยเล่าความก้าวหน้าด้านกล้ามเนื้อ ภาษา สังคม และอารมณ์</p>
-              </article>
-              <article class="service-card">
-                <span class="service-icon">04</span>
-                <h3>กิจกรรมพิเศษ</h3>
-                <p>รองรับวันสำคัญ กิจกรรมนอกห้องเรียน และอัลบั้มพิเศษของโรงเรียน</p>
-              </article>
-            </div>
-          </div>
-        </section> -->
-
-        <!-- <section class="section expertise">
-          <div class="section-inner expertise-grid">
-            <div>
-              <span class="eyebrow">Class Focus</span>
-              <h2 class="section-title">จัดแฟ้มให้ดูครบทั้งผลงานและบรรยากาศ</h2>
-              <p class="section-copy">
-                โทนใหม่เน้นความสบายตา มีพื้นที่ว่างมากขึ้น
-                และแยกส่วนข้อมูลให้สแกนง่าย
-                เหมาะกับการส่งให้ผู้ปกครองหรือใช้เป็นแฟ้มสะสมงานของห้องเรียน
-              </p>
-              <div class="skill-list" aria-label="จุดเด่นของแฟ้มผลงาน">
-                <div class="skill">
-                  <span><em>ภาพผลงานเด็ก</em><em>90%</em></span>
-                  <div class="bar"><i style="width: 90%"></i></div>
-                </div>
-                <div class="skill">
-                  <span><em>กิจกรรมในชั้นเรียน</em><em>80%</em></span>
-                  <div class="bar sage"><i style="width: 80%"></i></div>
-                </div>
-                <div class="skill">
-                  <span><em>สรุปและเข้าถึง Drive</em><em>95%</em></span>
-                  <div class="bar wine"><i style="width: 95%"></i></div>
-                </div>
-              </div>
-            </div>
-            <div class="portrait-frame" aria-hidden="true">
-              <img
-                src="assets/J-01.png"
-                alt=""
-                width="1024"
-                height="1024"
-              />
-              <div class="tone-dots">
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
-            </div>
-          </div>
-        </section> -->
-
-        <section class="section gallery" id="gallery">
+        <section class="section gallery reveal" id="gallery">
           <div class="section-inner">
             <div class="section-head">
               <div>
@@ -1342,57 +1522,14 @@
                 <h2 class="section-title">ผลงานล่าสุดของห้องเรียน</h2>
               </div>
               <p class="section-copy">
-                รูปชุดนี้ดึงมาจาก Google Drive ที่แยกไว้ตามหมวด
-                คุณครูเพิ่มรูปใหม่ได้โดยอัปโหลดเข้าโฟลเดอร์ของหมวดนั้น
+                แสดงประเภทของผลงานและกิจกรรมต่างๆ
+                เพื่อให้ผู้ปกครองสามารถเลือกดูได้ตามความสนใจ
               </p>
             </div>
             <div class="filter-row" id="filters"></div>
             <div class="portfolio-grid" id="portfolioGrid"></div>
           </div>
         </section>
-
-        <!-- <section class="section drive" id="drive">
-          <div class="section-inner drive-panel">
-            <div>
-              <span class="eyebrow">Google Drive</span>
-              <h2 class="section-title">เพิ่มรูปได้จากโฟลเดอร์เดิม</h2>
-              <p class="section-copy">
-                ระบบยังใช้ Apps Script และ Google Drive เดิม
-                จึงไม่ต้องเปลี่ยนวิธีทำงานของคุณครู
-                เพียงอัปโหลดรูปเข้าโฟลเดอร์ที่จัดหมวดไว้
-                หน้าเว็บจะนำมาแสดงในแกลเลอรี
-              </p>
-              <div class="folder-actions">
-                <a
-                  class="folder-link"
-                  href="https://drive.google.com/drive/folders/1Jyw4cOPxmwi6X99dz-oC4nRiUryU36Ak?usp=sharing"
-                  target="_blank"
-                  rel="noopener"
-                  >เปิดโฟลเดอร์หลัก</a
-                >
-                <a class="folder-link secondary-link" href="#gallery"
-                  >ดูแกลเลอรี</a
-                >
-              </div>
-            </div>
-            <ul class="drive-list">
-              <li>
-                <b>1</b><span>เปิดโฟลเดอร์ Google Drive หลักของห้องเรียน</span>
-              </li>
-              <li>
-                <b>2</b
-                ><span>เลือกหมวดกิจกรรมหรือระดับชั้นที่ต้องการเพิ่มรูป</span>
-              </li>
-              <li>
-                <b>3</b
-                ><span
-                  >อัปโหลดรูป แล้วกลับมา refresh
-                  หน้าเว็บเพื่อดูรายการล่าสุด</span
-                >
-              </li>
-            </ul>
-          </div>
-        </section> -->
       </main>
 
       <footer class="footer">
@@ -1409,16 +1546,7 @@
           <a href="#activities">กิจกรรม</a>
           <a href="#gallery">แกลเลอรี</a>
         </div>
-        <div>
-          <h4>Google Drive</h4>
-          <a
-            href="https://drive.google.com/drive/folders/1Jyw4cOPxmwi6X99dz-oC4nRiUryU36Ak?usp=sharing"
-            target="_blank"
-            rel="noopener"
-            >เปิดโฟลเดอร์หลัก</a
-          >
-          <a href="#drive">วิธีเพิ่มรูป</a>
-        </div>
+
         <div>
           <h4>สำหรับโรงเรียน</h4>
           <p>อนุบาล 1-3</p>
@@ -1426,12 +1554,37 @@
         </div>
       </footer>
     </div>
+    <dialog
+      class="contact-dialog"
+      id="contactDialog"
+      aria-labelledby="contactTitle"
+    >
+      <div class="contact-panel">
+        <header>
+          <div>
+            <h2 id="contactTitle">Contact</h2>
+            <p>ช่องทางติดต่อคุณครู</p>
+          </div>
+          <button
+            class="dialog-close"
+            id="contactClose"
+            type="button"
+            aria-label="ปิด"
+          >
+            ×
+          </button>
+        </header>
+        <ul class="contact-list" id="contactList"></ul>
+      </div>
+    </dialog>
 
     <script>
       const API_URL =
         "https://script.google.com/macros/s/AKfycbxHDiJFUcNWStAZ3p5pANw7jWPqUNN4LkElUnykJtiBmrifNp4bMPWgA_251jlJcWEo/exec";
       const MAIN_DRIVE_URL =
         "https://drive.google.com/drive/folders/1Jyw4cOPxmwi6X99dz-oC4nRiUryU36Ak?usp=sharing";
+      const CONTACT_FB = "https://www.facebook.com/jejethani";
+      const CONTACT_TEL = "096-762-5103";
       const fallbackItems = [
         {
           id: "sample-art",
@@ -1473,10 +1626,20 @@
       const loaderPercent = document.querySelector("#loaderPercent");
       const loaderBar = document.querySelector("#loaderBar");
       const loaderNote = document.querySelector("#loaderNote");
+      const contactButton = document.querySelector("#contactButton");
+      const contactDialog = document.querySelector("#contactDialog");
+      const contactClose = document.querySelector("#contactClose");
+      const contactList = document.querySelector("#contactList");
+      const parallaxLayers = document.querySelectorAll("[data-parallax-speed]");
+      const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      );
       let currentFilter = "ทั้งหมด";
       let items = [];
       let loadingProgress = 1;
       let loaderDone = false;
+      let parallaxFrame = 0;
+      let revealObserver = null;
       const progressTimer = window.setInterval(() => {
         if (loaderDone) return;
         const nextProgress =
@@ -1548,7 +1711,117 @@
         window.setTimeout(() => {
           document.body.classList.remove("is-loading");
           document.body.classList.add("is-ready");
+          setupRevealAnimations();
+          requestParallaxUpdate();
         }, 260);
+      }
+
+      function setupRevealAnimations() {
+        const revealItems = document.querySelectorAll(".reveal");
+        if (!revealItems.length) return;
+        if (revealObserver) revealObserver.disconnect();
+
+        if (reduceMotion.matches || !("IntersectionObserver" in window)) {
+          revealItems.forEach((item) => item.classList.add("is-visible"));
+          return;
+        }
+
+        revealObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              entry.target.classList.toggle("is-visible", entry.isIntersecting);
+              entry.target.classList.toggle(
+                "is-faded",
+                !entry.isIntersecting && entry.boundingClientRect.top < 0,
+              );
+            });
+          },
+          {
+            rootMargin: "-8% 0px -12%",
+            threshold: 0.18,
+          },
+        );
+
+        revealItems.forEach((item) => revealObserver.observe(item));
+      }
+
+      function updateParallax() {
+        parallaxFrame = 0;
+        if (reduceMotion.matches) return;
+
+        const scrollY = window.scrollY || 0;
+        parallaxLayers.forEach((layer) => {
+          const speed = Number(layer.dataset.parallaxSpeed || 0);
+          layer.style.transform = `translate3d(0, ${scrollY * speed}px, 0)`;
+        });
+
+        const heroImage = document.querySelector(".portrait-frame img");
+        if (heroImage) {
+          heroImage.style.transform = `translate3d(0, ${scrollY * -0.025}px, 0) scale(1.01)`;
+        }
+      }
+
+      function requestParallaxUpdate() {
+        if (parallaxFrame || reduceMotion.matches) return;
+        parallaxFrame = window.requestAnimationFrame(updateParallax);
+      }
+
+      function renderContactList() {
+        if (!contactList) return;
+
+        const contacts = [
+          {
+            icon: "FB",
+            label: "Facebook",
+            value: CONTACT_FB,
+            href: CONTACT_FB,
+          },
+          {
+            icon: "Tel",
+            label: "Telephone",
+            value: CONTACT_TEL,
+            href: CONTACT_TEL ? `tel:${CONTACT_TEL.replaceAll(" ", "")}` : "",
+          },
+        ];
+
+        contactList.innerHTML = contacts
+          .map((contact) => {
+            const value = escapeHtml(contact.value || "ยังไม่ได้ระบุ");
+            const detail = contact.href
+              ? `<a href="${escapeHtml(contact.href)}" target="${contact.href.startsWith("tel:") ? "_self" : "_blank"}" rel="noopener">${value}</a>`
+              : `<small>${value}</small>`;
+            return `
+              <li class="contact-item">
+                <b>${escapeHtml(contact.icon)}</b>
+                <div>
+                  <span>${escapeHtml(contact.label)}</span>
+                  ${detail}
+                </div>
+              </li>
+            `;
+          })
+          .join("");
+      }
+
+      function openContactDialog() {
+        if (!contactDialog) return;
+        renderContactList();
+        document.body.classList.add("contact-open");
+        if (typeof contactDialog.showModal === "function") {
+          contactDialog.showModal();
+        } else {
+          contactDialog.setAttribute("open", "");
+        }
+      }
+
+      function closeContactDialog() {
+        if (!contactDialog) return;
+        document.body.classList.remove("contact-open");
+        if (contactDialog.open && typeof contactDialog.close === "function") {
+          contactDialog.close();
+        } else {
+          contactDialog.removeAttribute("open");
+        }
       }
 
       async function setItemsAndReveal(nextItems) {
@@ -1610,17 +1883,16 @@
         }
 
         imageMosaic.innerHTML = randomItems
-          .slice(0, 9)
+          .slice(0, 8)
           .map((item) => {
             const title = escapeHtml(item.title || "ผลงานของเด็กๆ");
             const category = escapeHtml(item.category || "แกลเลอรี");
             const image = escapeHtml(item.image || "assets/J-01.png");
             return `
-              <article class="mosaic-card">
+              <article class="mosaic-card reveal">
                 <img src="${image}" alt="${title}" loading="lazy" decoding="async">
                 <div class="mosaic-copy">
                   <strong>${title}</strong>
-                  <span>${category}</span>
                 </div>
               </article>
             `;
@@ -1654,7 +1926,7 @@
               : "";
             const folderUrl = escapeHtml(item.folderUrl || MAIN_DRIVE_URL);
             return `
-              <article class="portfolio-card">
+              <article class="portfolio-card reveal">
                 <div class="portfolio-image">${image}</div>
                 <div class="portfolio-body">
                   <h3>${title}</h3>
@@ -1664,10 +1936,7 @@
                     <span>${escapeHtml(formatDate(item.date))}</span>
                     <span>${group}</span>
                   </div>
-                  <div class="folder-actions">
-                    <a class="folder-link" href="${folderUrl}" target="_blank" rel="noopener">เปิดโฟลเดอร์</a>
-                    <a class="folder-link secondary-link" href="${folderUrl}" target="_blank" rel="noopener">อัปโหลดรูป</a>
-                  </div>
+                
                 </div>
               </article>
             `;
@@ -1675,15 +1944,36 @@
           .join("");
       }
 
+      // <div class="folder-actions">
+      //             <a class="folder-link" href="${folderUrl}" target="_blank" rel="noopener">เปิดโฟลเดอร์</a>
+      //             <a class="folder-link secondary-link" href="${folderUrl}" target="_blank" rel="noopener">อัปโหลดรูป</a>
+      //           </div>
       filters.addEventListener("click", (event) => {
         const button = event.target.closest("[data-filter]");
         if (!button) return;
         currentFilter = button.dataset.filter;
         renderPortfolio();
+        setupRevealAnimations();
       });
 
       shuffleGrid?.addEventListener("click", () => {
         renderImageMosaic();
+        setupRevealAnimations();
+      });
+
+      contactButton?.addEventListener("click", openContactDialog);
+      contactClose?.addEventListener("click", closeContactDialog);
+      contactDialog?.addEventListener("click", (event) => {
+        if (event.target === contactDialog) closeContactDialog();
+      });
+      contactDialog?.addEventListener("close", () => {
+        document.body.classList.remove("contact-open");
+      });
+      window.addEventListener("scroll", requestParallaxUpdate, {
+        passive: true,
+      });
+      window.addEventListener("resize", requestParallaxUpdate, {
+        passive: true,
       });
 
       function normalizeItems(nextItems) {
