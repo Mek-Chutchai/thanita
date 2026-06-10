@@ -1,0 +1,1179 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="เว็บรวมผลงานและกิจกรรมของครูชั้นอนุบาล ดึงรูปจาก Google Drive แยกตามหมวด"
+    />
+    <title>Kindy Class Portfolio</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #263044;
+        --muted: #6f7887;
+        --paper: #ffffff;
+        --cream: #fff7dd;
+        --yellow: #ffd76d;
+        --pink: #ff7d9c;
+        --rose: #ffe0e7;
+        --blue: #47c6d8;
+        --sky: #d9f9ff;
+        --mint: #8bddc7;
+        --green: #d8f6bc;
+        --orange: #ffb05c;
+        --line: rgba(38, 48, 68, 0.1);
+        --shadow: 0 20px 48px rgba(52, 66, 96, 0.14);
+        --radius: 24px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        min-width: 320px;
+        margin: 0;
+        background: #fffaf0;
+        color: var(--ink);
+        font-family: "Poppins", "Noto Sans Thai", system-ui, sans-serif;
+        letter-spacing: 0;
+      }
+
+      body.locked {
+        overflow: hidden;
+      }
+
+      button,
+      input,
+      textarea,
+      select {
+        font: inherit;
+      }
+
+      button {
+        cursor: pointer;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      img {
+        display: block;
+        max-width: 100%;
+      }
+
+      .site {
+        width: 100%;
+        min-height: 100vh;
+        overflow: hidden;
+        background:
+          radial-gradient(
+            circle at 8% 9%,
+            rgba(255, 125, 156, 0.28) 0 90px,
+            transparent 92px
+          ),
+          radial-gradient(
+            circle at 96% 31%,
+            rgba(71, 198, 216, 0.28) 0 120px,
+            transparent 122px
+          ),
+          linear-gradient(180deg, #fff7df 0%, #ffffff 34%, #fff6e5 100%);
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        align-items: center;
+        gap: 20px;
+        min-height: 82px;
+        padding: 16px clamp(18px, 5vw, 72px);
+        background: rgba(255, 215, 109, 0.94);
+        border-bottom: 4px solid rgba(255, 255, 255, 0.58);
+        backdrop-filter: blur(14px);
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-width: max-content;
+      }
+
+      .brand-mark {
+        display: grid;
+        place-items: center;
+        width: 48px;
+        height: 48px;
+        border-radius: 16px;
+        background: #fff;
+        box-shadow: inset 0 -5px 0 rgba(38, 48, 68, 0.08);
+        font-size: 24px;
+      }
+
+      .brand strong {
+        display: block;
+        font-size: clamp(17px, 2vw, 24px);
+        font-weight: 800;
+        line-height: 1;
+      }
+
+      .brand span:last-child {
+        display: block;
+        margin-top: 4px;
+        color: rgba(38, 48, 68, 0.72);
+        font-size: 11px;
+        font-weight: 700;
+      }
+
+      .nav {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .nav a,
+      .pill-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 42px;
+        padding: 0 18px;
+        border: 0;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.78);
+        color: var(--ink);
+        font-size: 13px;
+        font-weight: 800;
+        line-height: 1.1;
+        text-align: center;
+        box-shadow: inset 0 -3px 0 rgba(38, 48, 68, 0.08);
+      }
+
+      .hero {
+        position: relative;
+        min-height: calc(100vh - 82px);
+        display: grid;
+        grid-template-columns: minmax(0, 1.02fr) minmax(320px, 0.98fr);
+        align-items: center;
+        gap: 44px;
+        padding: clamp(34px, 5vw, 80px) clamp(18px, 6vw, 92px);
+      }
+
+      .hero::before,
+      .hero::after {
+        content: "";
+        position: absolute;
+        border-radius: 999px;
+        pointer-events: none;
+      }
+
+      .hero::before {
+        width: 42vw;
+        height: 42vw;
+        left: -18vw;
+        top: 50px;
+        background: #ffdf64;
+      }
+
+      .hero::after {
+        width: 24vw;
+        height: 24vw;
+        right: -10vw;
+        bottom: 30px;
+        background: #b8edf2;
+      }
+
+      .hero-copy,
+      .hero-art {
+        position: relative;
+        z-index: 1;
+      }
+
+      .label {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 38px;
+        padding: 0 16px;
+        border-radius: 999px;
+        background: #fff;
+        color: #da6c83;
+        font-size: 13px;
+        font-weight: 800;
+        box-shadow: var(--shadow);
+      }
+
+      .hero h1 {
+        max-width: 780px;
+        margin: 24px 0 18px;
+        font-size: clamp(45px, 7vw, 96px);
+        font-weight: 800;
+        line-height: 0.98;
+      }
+
+      .hero p {
+        max-width: 640px;
+        margin: 0 0 28px;
+        color: #596376;
+        font-size: clamp(16px, 1.6vw, 21px);
+        font-weight: 600;
+        line-height: 1.7;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+      }
+
+      .primary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 54px;
+        padding: 0 25px;
+        border: 0;
+        border-radius: 999px;
+        background: var(--blue);
+        color: #fff;
+        font-size: 15px;
+        font-weight: 800;
+        line-height: 1.1;
+        text-align: center;
+        box-shadow: inset 0 -5px 0 rgba(38, 48, 68, 0.1);
+      }
+
+      .secondary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 54px;
+        padding: 0 25px;
+        border: 0;
+        border-radius: 999px;
+        background: var(--pink);
+        color: #fff;
+        font-size: 15px;
+        font-weight: 800;
+        line-height: 1.1;
+        text-align: center;
+        box-shadow: inset 0 -5px 0 rgba(38, 48, 68, 0.1);
+      }
+
+      .hero-art {
+        min-height: 560px;
+        display: grid;
+        place-items: end center;
+      }
+
+      .play-card {
+        position: relative;
+        width: min(100%, 560px);
+        min-height: 470px;
+        border-radius: 42px;
+        background:
+          radial-gradient(circle at 26% 24%, #fff 0 10px, transparent 11px),
+          radial-gradient(circle at 74% 18%, #fff 0 16px, transparent 17px),
+          linear-gradient(145deg, #8de5ed, #fff1b1 58%, #ffd4df);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+
+      .child {
+        position: absolute;
+        bottom: 38px;
+        width: 164px;
+        height: 220px;
+        border-radius: 80px 80px 42px 42px;
+        background: #ffe0bd;
+        box-shadow: inset 0 -72px 0 #8fd8f0;
+      }
+
+      .child::before {
+        content: "";
+        position: absolute;
+        top: 34px;
+        left: 38px;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: #263044;
+        box-shadow: 72px 0 0 #263044;
+      }
+
+      .child::after {
+        content: "";
+        position: absolute;
+        top: 82px;
+        left: 57px;
+        width: 52px;
+        height: 25px;
+        border-bottom: 7px solid #f26e87;
+        border-radius: 0 0 70px 70px;
+      }
+
+      .child.left {
+        left: 60px;
+      }
+
+      .child.right {
+        right: 56px;
+        transform: scale(0.92);
+        box-shadow: inset 0 -72px 0 #ffd76d;
+      }
+
+      .hair {
+        position: absolute;
+        top: -8px;
+        left: 24px;
+        width: 116px;
+        height: 54px;
+        border-radius: 80px 80px 24px 24px;
+        background: #5b3c31;
+      }
+
+      .toy {
+        position: absolute;
+        border-radius: 18px;
+        box-shadow: inset 0 -5px 0 rgba(38, 48, 68, 0.1);
+      }
+
+      .toy.one {
+        left: 178px;
+        bottom: 48px;
+        width: 92px;
+        height: 62px;
+        background: var(--yellow);
+      }
+
+      .toy.two {
+        right: 175px;
+        bottom: 58px;
+        width: 70px;
+        height: 70px;
+        background: var(--pink);
+        border-radius: 50%;
+      }
+
+      .toy.three {
+        left: 43%;
+        bottom: 132px;
+        width: 58px;
+        height: 100px;
+        background: var(--blue);
+        transform: rotate(-9deg);
+      }
+
+      .heart {
+        position: absolute;
+        width: 44px;
+        height: 40px;
+        transform: rotate(-8deg);
+      }
+
+      .heart::before,
+      .heart::after {
+        content: "";
+        position: absolute;
+        width: 24px;
+        height: 36px;
+        border-radius: 24px 24px 0 0;
+        background: var(--pink);
+        transform: rotate(-45deg);
+        transform-origin: 0 100%;
+      }
+
+      .heart::after {
+        left: 24px;
+        transform: rotate(45deg);
+        transform-origin: 100% 100%;
+      }
+
+      .heart.h1 {
+        top: 72px;
+        left: 150px;
+      }
+
+      .heart.h2 {
+        top: 116px;
+        right: 110px;
+        transform: scale(0.72) rotate(12deg);
+      }
+
+      .section {
+        padding: clamp(48px, 6vw, 86px) clamp(18px, 6vw, 92px);
+      }
+
+      .section-head {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 28px;
+        margin-bottom: 28px;
+      }
+
+      .section-head h2 {
+        margin: 12px 0 0;
+        font-size: clamp(34px, 5vw, 66px);
+        font-weight: 800;
+        line-height: 1;
+      }
+
+      .section-head p {
+        max-width: 430px;
+        margin: 0;
+        color: var(--muted);
+        font-size: 15px;
+        font-weight: 600;
+        line-height: 1.7;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+      }
+
+      .stat {
+        min-height: 150px;
+        padding: 24px;
+        border-radius: var(--radius);
+        background: #fff;
+        box-shadow: var(--shadow);
+      }
+
+      .stat b {
+        display: block;
+        margin-bottom: 8px;
+        font-size: clamp(32px, 4vw, 52px);
+        line-height: 1;
+      }
+
+      .stat span {
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      .activity-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+      }
+
+      .activity-card {
+        position: relative;
+        min-height: 250px;
+        padding: 24px;
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: var(--shadow);
+      }
+
+      .activity-card:nth-child(4n + 1) {
+        background: linear-gradient(145deg, #ffb1c4, #fff0a5);
+      }
+
+      .activity-card:nth-child(4n + 2) {
+        background: linear-gradient(145deg, #72d7e8, #dff8ff);
+      }
+
+      .activity-card:nth-child(4n + 3) {
+        background: linear-gradient(145deg, #ffe27b, #fff5ca);
+      }
+
+      .activity-card:nth-child(4n + 4) {
+        background: linear-gradient(145deg, #93ead1, #ffd0dd);
+      }
+
+      .activity-card h3 {
+        position: relative;
+        z-index: 1;
+        max-width: 220px;
+        margin: 0;
+        color: #fff;
+        font-size: 28px;
+        font-weight: 800;
+        line-height: 1.05;
+        text-shadow: 0 3px 14px rgba(38, 48, 68, 0.18);
+      }
+
+      .activity-card p {
+        position: relative;
+        z-index: 1;
+        max-width: 230px;
+        margin: 12px 0 0;
+        color: rgba(38, 48, 68, 0.74);
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 1.55;
+      }
+
+      .shape {
+        position: absolute;
+        right: 18px;
+        bottom: 18px;
+        width: 120px;
+        height: 120px;
+        border-radius: 32px;
+        background: rgba(255, 255, 255, 0.62);
+        transform: rotate(10deg);
+      }
+
+      .shape::before,
+      .shape::after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+      }
+
+      .shape::before {
+        width: 42px;
+        height: 42px;
+        left: 20px;
+        top: 22px;
+        background: var(--blue);
+      }
+
+      .shape::after {
+        width: 54px;
+        height: 54px;
+        right: 16px;
+        bottom: 16px;
+        background: var(--yellow);
+      }
+
+      .gallery {
+        background: linear-gradient(180deg, #ffffff 0%, #e7fbff 100%);
+      }
+
+      .filter-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 0 0 24px;
+      }
+
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 40px;
+        padding: 0 16px;
+        border: 0;
+        border-radius: 999px;
+        background: #fff;
+        color: var(--ink);
+        font-size: 13px;
+        font-weight: 800;
+        line-height: 1.1;
+        text-align: center;
+        box-shadow: inset 0 -3px 0 rgba(38, 48, 68, 0.08);
+      }
+
+      .chip.active {
+        background: var(--blue);
+        color: #fff;
+      }
+
+      .portfolio-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 22px;
+      }
+
+      .portfolio-card {
+        overflow: hidden;
+        border-radius: var(--radius);
+        background: #fff;
+        box-shadow: var(--shadow);
+      }
+
+      .portfolio-image {
+        position: relative;
+        min-height: 250px;
+        background:
+          radial-gradient(
+            circle at 22% 28%,
+            rgba(255, 255, 255, 0.75) 0 18px,
+            transparent 19px
+          ),
+          radial-gradient(
+            circle at 74% 33%,
+            rgba(255, 255, 255, 0.55) 0 26px,
+            transparent 27px
+          ),
+          linear-gradient(145deg, #ffd76d, #ff8aa6 45%, #45c5d9);
+      }
+
+      .portfolio-image img {
+        width: 100%;
+        height: 100%;
+        min-height: 250px;
+        object-fit: cover;
+      }
+
+      .portfolio-image::after {
+        content: attr(data-icon);
+        position: absolute;
+        right: 22px;
+        bottom: 18px;
+        font-size: 70px;
+        line-height: 1;
+      }
+
+      .portfolio-body {
+        padding: 20px;
+      }
+
+      .portfolio-body h3 {
+        margin: 0 0 8px;
+        font-size: 22px;
+        font-weight: 800;
+      }
+
+      .portfolio-body p {
+        margin: 0 0 14px;
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1.6;
+      }
+
+      .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .meta span {
+        padding: 7px 10px;
+        border-radius: 999px;
+        background: var(--cream);
+        color: #8d6424;
+        font-size: 11px;
+        font-weight: 800;
+      }
+
+      .drive-panel {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 24px;
+        align-items: center;
+        margin-top: 34px;
+        padding: 28px;
+        border-radius: var(--radius);
+        background:
+          radial-gradient(
+            circle at 92% 24%,
+            rgba(255, 255, 255, 0.44) 0 64px,
+            transparent 66px
+          ),
+          linear-gradient(135deg, #ffe385, #ff8fa7 58%, #69d3e1);
+        box-shadow: var(--shadow);
+      }
+
+      .drive-panel h3 {
+        margin: 0 0 8px;
+        color: #fff;
+        font-size: clamp(26px, 4vw, 44px);
+        font-weight: 800;
+      }
+
+      .drive-panel p {
+        max-width: 660px;
+        margin: 0;
+        color: rgba(38, 48, 68, 0.76);
+        font-size: 15px;
+        font-weight: 700;
+        line-height: 1.7;
+      }
+
+      .folder-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 16px;
+      }
+
+      .folder-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 38px;
+        padding: 0 14px;
+        border-radius: 999px;
+        background: var(--blue);
+        color: #fff;
+        font-size: 12px;
+        font-weight: 800;
+        line-height: 1.1;
+        text-align: center;
+        box-shadow: inset 0 -4px 0 rgba(38, 48, 68, 0.1);
+      }
+
+      .folder-link.secondary-link {
+        background: var(--pink);
+      }
+
+      .empty-state {
+        grid-column: 1 / -1;
+        padding: 28px;
+        border-radius: var(--radius);
+        background: #fff;
+        color: var(--muted);
+        font-size: 15px;
+        font-weight: 700;
+        line-height: 1.7;
+        box-shadow: var(--shadow);
+      }
+
+      .footer {
+        display: grid;
+        grid-template-columns: 1.1fr repeat(3, 1fr);
+        gap: 24px;
+        padding: 42px clamp(18px, 6vw, 92px);
+        background: #8bdbe1;
+      }
+
+      .footer h3,
+      .footer h4 {
+        margin: 0 0 12px;
+        font-weight: 800;
+      }
+
+      .footer p,
+      .footer a {
+        display: block;
+        margin: 0 0 8px;
+        color: rgba(38, 48, 68, 0.7);
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      @media (max-width: 980px) {
+        .topbar {
+          grid-template-columns: 1fr auto;
+        }
+
+        .nav {
+          grid-column: 1 / -1;
+          justify-content: start;
+          overflow-x: auto;
+          padding-bottom: 2px;
+        }
+
+        .hero,
+        .drive-panel,
+        .footer {
+          grid-template-columns: 1fr;
+        }
+
+        .hero-art {
+          min-height: 470px;
+        }
+
+        .stats,
+        .activity-grid,
+        .portfolio-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 680px) {
+        .site {
+          min-height: 100vh;
+        }
+
+        .topbar {
+          min-height: auto;
+          padding: 12px 14px;
+          gap: 12px;
+        }
+
+        .brand-mark {
+          width: 42px;
+          height: 42px;
+        }
+
+        .brand span:last-child {
+          display: none;
+        }
+
+        .nav a {
+          min-height: 36px;
+          padding: 0 13px;
+          font-size: 12px;
+        }
+
+        .hero {
+          min-height: auto;
+          padding: 34px 14px 44px;
+          gap: 24px;
+        }
+
+        .hero h1 {
+          font-size: 43px;
+        }
+
+        .hero p {
+          font-size: 15px;
+        }
+
+        .hero-actions,
+        .section-head {
+          display: grid;
+        }
+
+        .primary,
+        .secondary {
+          width: 100%;
+        }
+
+        .hero-art {
+          min-height: 370px;
+        }
+
+        .play-card {
+          min-height: 360px;
+          border-radius: 30px;
+        }
+
+        .child {
+          width: 118px;
+          height: 168px;
+          bottom: 30px;
+        }
+
+        .child.left {
+          left: 26px;
+        }
+
+        .child.right {
+          right: 22px;
+        }
+
+        .child::before {
+          left: 28px;
+          width: 12px;
+          height: 12px;
+          box-shadow: 52px 0 0 #263044;
+        }
+
+        .child::after {
+          left: 39px;
+          top: 70px;
+          width: 42px;
+        }
+
+        .hair {
+          left: 18px;
+          width: 84px;
+        }
+
+        .toy.one {
+          left: 116px;
+        }
+
+        .toy.two {
+          right: 108px;
+        }
+
+        .toy.three {
+          display: none;
+        }
+
+        .section {
+          padding: 42px 14px;
+        }
+
+        .stats,
+        .activity-grid,
+        .portfolio-grid,
+        .footer {
+          grid-template-columns: 1fr;
+        }
+
+        .activity-card {
+          min-height: 220px;
+        }
+
+        .drive-panel {
+          padding: 22px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="site" id="site">
+      <header class="topbar">
+        <a class="brand" href="#home" aria-label="หน้าแรก">
+          <span class="brand-mark">🌈</span>
+          <span>
+            <strong>Thanita Works</strong>
+            <span>แฟ้มผลงานครูอนุบาล</span>
+          </span>
+        </a>
+        <nav class="nav" aria-label="เมนูหลัก">
+          <a href="#works">ผลงาน</a>
+          <a href="#activities">กิจกรรม</a>
+          <a href="#gallery">แกลเลอรี</a>
+        </nav>
+      </header>
+
+      <main id="home">
+        <section class="hero">
+          <div class="hero-copy">
+            <span class="label">แฟ้มภาพกิจกรรมห้องอนุบาล</span>
+            <h1>รวมผลงานเด็กๆ และกิจกรรมของคุณครู</h1>
+            <p>
+              เก็บรูปงานศิลปะ กิจกรรมการเรียนรู้
+              และโมเมนต์น่ารักของห้องเรียนไว้ในที่เดียว โดยดึงจาก Google Drive
+              ที่คุณครูแยกโฟลเดอร์ไว้ตามหมวด
+            </p>
+            <div class="hero-actions">
+              <a class="primary" href="#gallery">ดูผลงานล่าสุด</a>
+            </div>
+          </div>
+          <div class="hero-art" aria-hidden="true">
+            <div class="play-card">
+              <span class="heart h1"></span>
+              <span class="heart h2"></span>
+              <div class="child left"><span class="hair"></span></div>
+              <div class="child right"><span class="hair"></span></div>
+              <span class="toy one"></span>
+              <span class="toy two"></span>
+              <span class="toy three"></span>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="works">
+          <div class="section-head">
+            <div>
+              <span class="label">ภาพรวมผลงาน</span>
+              <h2>ห้องเรียนสดใส จัดเก็บเป็นระบบ</h2>
+            </div>
+            <p>
+              เหมาะสำหรับคุณครูที่อยากเก็บหลักฐานการเรียนรู้และแชร์ภาพกิจกรรมโดยไม่ต้องเข้า
+              Google Drive เองทุกครั้ง
+            </p>
+          </div>
+          <div class="stats">
+            <div class="stat">
+              <b id="statWorks">5</b><span>ผลงานในแฟ้ม</span>
+            </div>
+            <div class="stat"><b>5</b><span>หมวดกิจกรรม</span></div>
+            <div class="stat"><b>6</b><span>โฟลเดอร์ Drive</span></div>
+            <div class="stat"><b>ง่าย</b><span>อัปโหลดใน Drive</span></div>
+          </div>
+        </section>
+
+        <section class="section gallery" id="gallery">
+          <div class="section-head">
+            <div>
+              <span class="label">แกลเลอรีผลงาน</span>
+              <h2>ผลงานล่าสุดของห้องเรียน</h2>
+            </div>
+            <p>
+              รูปชุดนี้ดึงมาจาก Google Drive ที่แยกไว้ตามหมวด
+              คุณครูเพิ่มรูปใหม่ได้ง่ายๆ โดยเปิดโฟลเดอร์ Drive
+              แล้วอัปโหลดเข้าโฟลเดอร์ของหมวดนั้น
+            </p>
+          </div>
+          <div class="filter-row" id="filters"></div>
+          <div class="portfolio-grid" id="portfolioGrid"></div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <div>
+          <h3>Thanita Works</h3>
+          <p>
+            แฟ้มภาพผลงานสำหรับครูชั้นอนุบาล ใช้ง่าย ดูน่ารัก
+            และรองรับมือถือเต็มจอ
+          </p>
+        </div>
+        <div>
+          <h4>เมนู</h4>
+          <a href="#works">ผลงาน</a>
+          <a href="#activities">กิจกรรม</a>
+          <a href="#gallery">แกลเลอรี</a>
+        </div>
+        <div>
+          <h4>Google Drive</h4>
+          <a
+            href="https://drive.google.com/drive/folders/1Jyw4cOPxmwi6X99dz-oC4nRiUryU36Ak?usp=sharing"
+            target="_blank"
+            rel="noopener"
+            >เปิดโฟลเดอร์หลัก</a
+          >
+          <a href="#drive">ดูปุ่มอัปโหลด</a>
+        </div>
+        <div>
+          <h4>สำหรับโรงเรียน</h4>
+          <p>อนุบาล 1-3</p>
+          <p>กิจกรรมรายสัปดาห์</p>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      const API_URL =
+        "https://script.google.com/macros/s/AKfycbxrCZsASp-7m6hkHX452KXPpbrsa1I4GOrvTmyNzN-wyezwkzZXAb0L8M84bkjeuos/exec";
+      const fallbackItems = [];
+
+      const portfolioGrid = document.querySelector("#portfolioGrid");
+      const filters = document.querySelector("#filters");
+      const statWorks = document.querySelector("#statWorks");
+      let currentFilter = "ทั้งหมด";
+      let items = [];
+
+      function formatDate(value) {
+        if (!value) return "ยังไม่ระบุวันที่";
+        return new Intl.DateTimeFormat("th-TH", {
+          day: "numeric",
+          month: "short",
+          year: "numeric",
+        }).format(new Date(value));
+      }
+
+      function renderFilters(items) {
+        const cats = [
+          "ทั้งหมด",
+          ...new Set(items.map((item) => item.category)),
+        ];
+        filters.innerHTML = cats
+          .map(
+            (cat) =>
+              `<button class="chip ${cat === currentFilter ? "active" : ""}" type="button" data-filter="${cat}">${cat}</button>`,
+          )
+          .join("");
+      }
+
+      function renderPortfolio() {
+        const visible =
+          currentFilter === "ทั้งหมด"
+            ? items
+            : items.filter((item) => item.category === currentFilter);
+        statWorks.textContent = items.length;
+        renderFilters(items);
+        if (!visible.length) {
+          portfolioGrid.innerHTML = `
+            <div class="empty-state">
+              ยังไม่พบรูปในหมวดนี้ ถ้าเพิ่งอัปโหลดรูปเข้า Google Drive ให้รอสักครู่แล้ว refresh หน้าเว็บอีกครั้ง
+            </div>
+          `;
+          return;
+        }
+        portfolioGrid.innerHTML = visible
+          .map(
+            (item) => `
+          <article class="portfolio-card">
+            <div class="portfolio-image" data-icon="${item.icon || ""}">
+              ${item.image ? `<img src="${item.image}" alt="${item.title}" loading="lazy" decoding="async">` : ""}
+            </div>
+            <div class="portfolio-body">
+              <h3>${item.title}</h3>
+              <p>${item.desc || "บันทึกผลงานและกิจกรรมของเด็กๆ"}</p>
+              <div class="meta">
+                <span>${item.category}</span>
+                <span>${formatDate(item.date)}</span>
+                <span>${item.group || "อนุบาล"}</span>
+              </div>
+              <div class="folder-actions">
+                <a class="folder-link" href="${item.folderUrl}" target="_blank" rel="noopener">เปิดโฟลเดอร์</a>
+                <a class="folder-link secondary-link" href="${item.folderUrl}" target="_blank" rel="noopener">อัปโหลดรูป</a>
+              </div>
+            </div>
+          </article>
+        `,
+          )
+          .join("");
+      }
+
+      filters.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-filter]");
+        if (!button) return;
+        currentFilter = button.dataset.filter;
+        renderPortfolio();
+      });
+
+      function normalizeItems(nextItems) {
+        return nextItems.map((item, index) => ({
+          id: item.id || `drive-${index}`,
+          title: item.title || item.fileName || `ผลงาน ${index + 1}`,
+          category: item.category || "กิจกรรมพิเศษ",
+          date: item.updatedAt || item.date || "",
+          group: item.group || "แฟ้มผลงานครูอนุบาล",
+          desc:
+            item.desc ||
+            `รูปจาก Google Drive หมวด ${item.category || "กิจกรรม"}`,
+          image: item.image,
+          folderUrl: item.folderUrl,
+          fileName: item.fileName || "",
+        }));
+      }
+
+      function loadItemsByJsonp() {
+        portfolioGrid.innerHTML = `
+          <div class="empty-state">กำลังโหลดรูปจาก Google Drive...</div>
+        `;
+
+        const callbackName = `kindyDriveCallback_${Date.now()}`;
+        const script = document.createElement("script");
+        const timeout = window.setTimeout(() => {
+          cleanup();
+          useFallback("Apps Script ไม่ตอบกลับในเวลาที่กำหนด");
+        }, 8000);
+
+        function cleanup() {
+          window.clearTimeout(timeout);
+          delete window[callbackName];
+          script.remove();
+        }
+
+        function useFallback(reason) {
+          items = fallbackItems;
+          renderPortfolio();
+        }
+
+        window[callbackName] = (payload) => {
+          cleanup();
+          const nextItems = Array.isArray(payload)
+            ? payload
+            : payload.items || [];
+          items = nextItems.length ? normalizeItems(nextItems) : fallbackItems;
+          renderPortfolio();
+        };
+
+        script.onerror = () => {
+          cleanup();
+          useFallback("โหลด script ไม่สำเร็จ");
+        };
+
+        script.src = `${API_URL}?callback=${callbackName}&t=${Date.now()}`;
+        document.head.appendChild(script);
+      }
+
+      loadItemsByJsonp();
+    </script>
+  </body>
+</html>
